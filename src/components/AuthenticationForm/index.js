@@ -8,8 +8,8 @@ import { isValidApiKey, isSecureUrl } from "../../util/redmine";
 import { setRedmineAddress, setRedmineKey } from "../../actions/redmine";
 
 const mapStateToProps = state => ({
-  redmineKey: getRedmineKey(state),
-  redmineAddress: getRedmineAddress(state)
+  storedKey: getRedmineKey(state),
+  storedAddress: getRedmineAddress(state)
 });
 
 const mapDispatchToProps = dispatch => ({
