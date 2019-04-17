@@ -24,9 +24,6 @@ exports.corsProxy = (req, res) => {
     return;
   }
 
-  console.log("these are headers", headers);
-  console.log("this is the url", url);
-
   request.get(
     {
       url,
@@ -41,8 +38,6 @@ exports.corsProxy = (req, res) => {
         res.status(500).send(error);
         return;
       }
-
-      console.log(response.headers);
 
       res.send(body);
     }
