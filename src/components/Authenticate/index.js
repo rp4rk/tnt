@@ -1,12 +1,14 @@
 import React from "react";
-import { Typography, Divider } from "antd";
+import { Typography, Divider, Icon } from "antd";
 import { AuthenticationForm } from "../AuthenticationForm";
 
 const { Title, Text } = Typography;
 
 export const Authenticate = () => (
   <>
-    <Title level={2}>Authenticate</Title>
+    <Title level={2}>
+      <Icon type="setting" /> - Authenticate
+    </Title>
     <Text>
       In order to work, we require your redmine address and API key.{" "}
       <strong>
