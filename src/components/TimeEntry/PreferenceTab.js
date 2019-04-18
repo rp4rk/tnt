@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   setProjectAlias: alias => dispatch(setProjectAlias(props.id, alias))
 });
 
-const PreferenceTab = ({ defaultValue, setProjectAlias, projectName }) => {
+const PreferenceTab = ({ setProjectAlias, projectName }) => {
   const [editing, toggleEditing] = useState(false);
   const [alias, setAlias] = useInput(projectName);
 
@@ -52,6 +52,7 @@ const PreferenceTab = ({ defaultValue, setProjectAlias, projectName }) => {
             }}
           />
           <Input
+            autoFocus={true}
             onChange={setAlias}
             defaultValue={projectName}
             onClick={e => {

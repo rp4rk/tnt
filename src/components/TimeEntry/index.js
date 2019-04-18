@@ -24,10 +24,9 @@ export function TimeEntryUnconnected({ getProjects, projects }) {
   return (
     <Tabs tabPosition="left">
       {projects.map(project => (
-        <TabPane
-          key={project.id}
-          tab={<PreferenceTab id={project.id} defaultValue={project.name} />}
-        />
+        <TabPane key={project.id} tab={<PreferenceTab id={project.id} />}>
+          {project.name}
+        </TabPane>
       ))}
     </Tabs>
   );
