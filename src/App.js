@@ -1,12 +1,13 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { Layout, Menu } from "antd";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Layout } from "antd";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 import { AppView, ContentContainer, ContentView } from "./styled";
 import { Authenticate } from "./components/Authenticate";
 import { Entries } from "./components/Entries";
 import { store } from "./store";
+import Navigation from "./components/Navigation";
 const { Sider } = Layout;
 
 function App() {
@@ -15,23 +16,17 @@ function App() {
       <Router>
         <AppView className="fullHeight">
           <Sider theme="dark" breakpoint="lg" collapsedWidth="0">
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-              <Menu.Item key="1">
-                <Link to="/">
-                  <span>Authenticate</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Link to="entries">
-                  <span>Entries</span>
-                </Link>
-              </Menu.Item>
-            </Menu>
+            <Navigation />
           </Sider>
           <ContentView>
             <ContentContainer>
-              <Route exact path="/" component={Authenticate} />
-              <Route path="/entries" component={Entries} />
+              <Route
+                exact
+                path="/"
+                component={() => <Redirect to="/settings" />}
+              />
+              <Route exact path="/settings" component={Authenticate} />
+              <Route exact path="/entries" component={Entries} />
             </ContentContainer>
           </ContentView>
         </AppView>
