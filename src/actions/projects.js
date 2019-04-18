@@ -1,11 +1,15 @@
 import {
   GET_PROJECTS_START,
   GET_PROJECTS_SUCCESS,
-  GET_PROJECTS_FAILURE
+  GET_PROJECTS_FAILURE,
+  SET_PROJECT_ALIAS
 } from "../constants/actionTypes";
 import { getProjectEndpoint } from "../constants/endpoints";
 import { getRedmineAddress, getRedmineKey } from "../selectors/redmine";
 
+/**
+ * Fetching Projects
+ */
 export const getProjectsStart = () => ({
   type: GET_PROJECTS_START,
   payload: {
@@ -14,10 +18,10 @@ export const getProjectsStart = () => ({
   error: null
 });
 
-export const getProjectsSuccess = projects => ({
+export const getProjectsSuccess = projectResponse => ({
   type: GET_PROJECTS_SUCCESS,
   payload: {
-    projects,
+    projects: projectResponse.projects,
     loading: false
   }
 });
@@ -30,7 +34,7 @@ export const getProjectsFailure = error => ({
   error
 });
 
-export const getProjects = () => async (dispatch, getState) => {
+export const fetchProjects = () => async (dispatch, getState) => {
   const state = getState();
   const host = getRedmineAddress(state);
   const key = getRedmineKey(state);
@@ -49,6 +53,21 @@ export const getProjects = () => async (dispatch, getState) => {
 
     dispatch(getProjectsSuccess(projectJson));
   } catch (err) {
+    console.error(err);
     dispatch(getProjectsFailure(err));
   }
 };
+
+/**
+ * Project Aliases
+ */
+export const setProjectAlias = (id, alias) => ({
+  type: SET_PROJECT_ALIAS,
+  payload: alias,
+  meta: {
+    id,
+    store: {
+      key: `PROJECT_ALIAS_${id}`
+    }
+  }
+});

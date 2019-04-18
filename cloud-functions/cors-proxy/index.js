@@ -6,7 +6,8 @@ exports.corsProxy = (req, res) => {
   res.set({
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Headers": "content-type, x-redmine-api-key",
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Cache-Control": "no-cache"
   });
 
   if (req.method !== "GET" && req.method !== "OPTIONS") {
