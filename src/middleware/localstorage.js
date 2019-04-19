@@ -1,3 +1,6 @@
+/**
+ * Stores any action payload that has a 'store' property on the meta tag
+ */
 export const localstorage = store => dispatch => action => {
   // If we have no store meta, ignore the action
   if (!action.meta || !action.meta.store) {

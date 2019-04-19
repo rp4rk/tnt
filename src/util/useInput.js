@@ -1,13 +1,22 @@
 import { useState } from "react";
 
-// Passes input value to state
+/**
+ * Hooks for updating state from an input
+ * @param {any} initialValue An initial value for the input
+ * @returns {[any, function]} A tuple containing the value and setter
+ */
 export const useInput = initialValue => {
   const [value, setValue] = useState(initialValue);
 
   return [value, e => setValue(e.target.value)];
 };
 
-// Validates beforehand, note this is tied tightly with antd
+/**
+ * Hook for validating and managing an input state
+ * @param {function} validationFn A validation function to run the value against
+ * @param {any} initialValue An initial value for the input
+ * @returns {[any, function, boolean, boolean]}
+ */
 export const useInputWithValidation = (validationFn, initialValue) => {
   const [value, setValue] = useInput(initialValue);
   const [pristine, setPristine] = useState(true);

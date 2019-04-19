@@ -22,5 +22,16 @@ export default function redmine(state = initialState, action) {
 }
 
 // Private selectors
+/**
+ * Get the current API key for redmine
+ * @param {Object} state Scoped state
+ * @returns {String} The API key
+ */
 export const getRedmineKey = state => state.key;
+
+/**
+ * Get the current address for the redmine instance
+ * @param {Object} state Scoped state
+ * @returns {String} The address for redmine
+ */
 export const getRedmineAddress = state => state.address;

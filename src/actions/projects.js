@@ -31,7 +31,7 @@ export const getProjectsFailure = error => ({
   payload: {
     loading: false
   },
-  error
+  error: error.toString()
 });
 
 export const fetchProjects = () => async (dispatch, getState) => {
@@ -51,9 +51,11 @@ export const fetchProjects = () => async (dispatch, getState) => {
 
     const projectJson = await projects.json();
 
+    if (projects.status !== 200)
+      throw new Error("Failed to get a response from the server.");
+
     dispatch(getProjectsSuccess(projectJson));
   } catch (err) {
-    console.error(err);
     dispatch(getProjectsFailure(err));
   }
 };

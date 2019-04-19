@@ -56,8 +56,42 @@ export default function projects(state = initialState, action) {
 }
 
 // Private selectors
+/**
+ * Gets an array of all projects
+ * @param {Object} state Scoped state
+ * @return {Object[]} An array of all projects
+ */
 export const getProjects = state => Object.values(state.projects);
+
+/**
+ * Gets the loading status of projects
+ * @param {Object} state Scoped state
+ * @returns {Boolean} Whether or not the project call is loading
+ */
 export const getProjectsLoading = state => state.loading;
+
+/**
+ * Get a single project by it's id
+ * @param {Object} state Scoped state
+ * @param {Number} id A project id
+ * @returns {Object} A project
+ */
 export const getProjectById = (state, id) => state.projects[id];
+
+/**
+ * Get a project name by it's id
+ * @param {Object} state Scoped state
+ * @param {Number} id A project id
+ * @returns {String} The name of a project
+ */
 export const getProjectName = (state, id) =>
   state.projectAliases[id] || getProjectById(state, id).name;
+
+/**
+ * Get a list of valid activities for the given project
+ * @param {Object} state Scoped state
+ * @param {Number} id The id of the project
+ * @returns {Object[]} A list of activities for this project
+ */
+export const getProjectActivities = (state, id) =>
+  getProjectById(state, id).time_entry_activities;
