@@ -1,4 +1,5 @@
 import * as FromProjects from "../reducers/projects";
+import { PROJECT_STATUS } from "../constants/projectStatus";
 
 const STATE_KEY = "projects";
 
@@ -8,6 +9,16 @@ const STATE_KEY = "projects";
  * @return {Object[]} An array of all projects
  */
 export const getProjects = state => FromProjects.getProjects(state[STATE_KEY]);
+
+/**
+ * Gets an array of all active projects
+ * @param {Object} state Application state
+ * @return {Object[]} An array of all active projects
+ */
+export const getActiveProjects = state =>
+  FromProjects.getProjects(state[STATE_KEY]).filter(
+    project => project.status !== PROJECT_STATUS.CLOSED
+  );
 
 /**
  * Gets the loading status of projects
