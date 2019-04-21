@@ -1,29 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, Select, InputNumber, Input, Typography, Button } from "antd";
-import styled from "styled-components";
+import { Select, InputNumber, Input, Typography, Button, Icon } from "antd";
 
 import { getProjectActivities } from "../../selectors/projects";
 import { containsString } from "../../util/string";
 import DateRangePicker from "../DateRangePicker";
 
+import { StyledCard, GridContainer, ActionsContainer } from "./styled";
+
 const { Text } = Typography;
-
 const { Option } = Select;
-const StyledCard = styled(Card)`
-  && {
-    padding-bottom: 5px;
-  }
-`;
-
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-
-  && > * {
-    margin-bottom: 12px;
-  }
-`;
 
 const mapStateToProps = (state, props) => ({
   activities: getProjectActivities(state, props.project)
@@ -38,7 +24,6 @@ const Entry = ({ day, activities }) => {
 
         <Text>Activity</Text>
         <Select
-          style={{ width: 200 }}
           showSearch
           placeholder="Select an activity"
           filterOption={(input, option) =>
@@ -57,8 +42,17 @@ const Entry = ({ day, activities }) => {
 
         <Text>Hours</Text>
         <InputNumber />
-        <Button type="primary">Submit</Button>
       </GridContainer>
+      <ActionsContainer>
+        <Button>
+          <Icon type="plus-circle" theme="filled" />
+          Submit
+        </Button>
+        <Button type="primary">
+          <Icon type="plus-circle" theme="filled" />
+          New Time Entry
+        </Button>
+      </ActionsContainer>
     </StyledCard>
   );
 };
