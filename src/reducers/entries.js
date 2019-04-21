@@ -1,19 +1,18 @@
-const initialState = {
-  45: [
-    {
-      projectId: 45,
-      hours: 3,
-      activityId: 1,
-      comments: "",
-      timeSpent: {
-        fromDate: new Date(),
-        toDate: new Date()
-      }
-    }
-  ]
-};
+import { CREATE_TIME_ENTRY } from "../constants/actionTypes";
 
-const REDUCERS = {};
+const initialState = {};
+
+const REDUCERS = {
+  [CREATE_TIME_ENTRY]: (state, action) => {
+    const { projectId } = action.payload;
+    const existingEntries = state[projectId] || [];
+
+    return {
+      ...state,
+      [projectId]: [...existingEntries, action.payload]
+    };
+  }
+};
 
 export default function entries(state = initialState, action) {
   const handler = REDUCERS[action.type];

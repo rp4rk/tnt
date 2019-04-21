@@ -9,3 +9,8 @@ export const GET_PROJECTS_FAILURE = "GET_PROJECTS_FAILURE";
 
 // Project Aliases
 export const SET_PROJECT_ALIAS = "SET_PROJECT_ALIAS";
+
+// Time Entries
+export const CREATE_TIME_ENTRY = "CREATE_TIME_ENTRY";
+export const UPDATE_TIME_ENTRY = "UPDATE_TIME_ENTRY";
+export const DELETE_TIME_ENTRY = "DELETE_TIME_ENTRY";

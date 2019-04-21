@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
   getProjects: () => dispatch(fetchProjects())
 });
 
-export function TimeEntryUnconnected({ getProjects, projects }) {
+function TimeEntry({ getProjects, projects }) {
   useEffect(() => {
     getProjects();
   }, []);
@@ -33,7 +33,7 @@ export function TimeEntryUnconnected({ getProjects, projects }) {
   );
 }
 
-export const TimeEntry = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TimeEntryUnconnected);
+)(TimeEntry);

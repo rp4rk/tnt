@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Divider, Icon } from "antd";
-import { TimeEntry } from "../TimeEntry";
+import TimeEntry from "../TimeEntry";
 
 const { Title, Text } = Typography;
 
