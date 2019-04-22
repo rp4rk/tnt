@@ -11,16 +11,20 @@ export const createTimeEntry = projectId => ({
     hours: 0,
     activityId: "",
     comments: "",
-    timeSpent: {
-      fromDate: null,
-      toDate: null,
-      includeWeekends: false
-    }
+    fromDate: null,
+    toDate: null,
+    includeWeekends: false
   }
 });
 
-export const updateTimeEntry = () => ({
-  type: UPDATE_TIME_ENTRY
+export const updateTimeEntry = (projectId, entryId, propertyId, value) => ({
+  type: UPDATE_TIME_ENTRY,
+  payload: value,
+  meta: {
+    propertyId,
+    entryId,
+    projectId
+  }
 });
 
 export const deleteTimeEntry = () => ({

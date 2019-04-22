@@ -40,7 +40,10 @@ function TimeEntry({
     >
       {projects.map(project => (
         <TabPane key={project.id} tab={<PreferenceTab id={project.id} />}>
-          {entries && entries.map(entry => <Entry projectId={project.id} />)}
+          {entries &&
+            entries.map((entry, idx) => (
+              <Entry key={idx} projectId={project.id} entryId={idx} />
+            ))}
         </TabPane>
       ))}
     </Tabs>

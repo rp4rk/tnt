@@ -7,29 +7,49 @@ import { containsString } from "../../util/string";
 import DateRangePicker from "../DateRangePicker";
 
 import { StyledCard, GridContainer, ActionsContainer } from "./styled";
-import { createTimeEntry } from "../../actions/entries";
+import { createTimeEntry, updateTimeEntry } from "../../actions/entries";
+import { getEntryProperty } from "../../selectors/entries";
 
 const { Text } = Typography;
 const { Option } = Select;
 
-const mapStateToProps = (state, props) => ({
-  activities: getProjectActivities(state, props.projectId)
+const mapStateToProps = (state, { projectId, entryId }) => ({
+  activities: getProjectActivities(state, projectId),
+  hours: getEntryProperty(state, projectId, entryId, "hours"),
+  comments: getEntryProperty(state, projectId, entryId, "comments")
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  createNewTimeEntry: () => dispatch(createTimeEntry(ownProps.projectId))
+const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
+  createNewTimeEntry: () => dispatch(createTimeEntry(projectId)),
+  setActivityId: value =>
+    dispatch(updateTimeEntry(projectId, entryId, "activityId", value)),
+  setHours: value =>
+    dispatch(updateTimeEntry(projectId, entryId, "hours", value)),
+  setComments: e =>
+    dispatch(updateTimeEntry(projectId, entryId, "comments", e.target.value))
 });
 
-const Entry = ({ day, activities, createNewTimeEntry }) => {
+const Entry = ({
+  activities,
+  createNewTimeEntry,
+  setHours,
+  setComments,
+  setActivityId,
+  hours,
+  comments,
+  projectId,
+  entryId
+}) => {
   return (
     <StyledCard size="small" title="Time Entry">
       <GridContainer>
         <Text>Date</Text>
-        <DateRangePicker />
+        <DateRangePicker projectId={projectId} entryId={entryId} />
 
         <Text>Activity</Text>
         <Select
           showSearch
+          onChange={setActivityId}
           placeholder="Select an activity"
           filterOption={(input, option) =>
             containsString(option.props.children, input)
@@ -43,10 +63,10 @@ const Entry = ({ day, activities, createNewTimeEntry }) => {
         </Select>
 
         <Text>Description</Text>
-        <Input />
+        <Input onChange={setComments} value={comments} />
 
         <Text>Hours</Text>
-        <InputNumber />
+        <InputNumber onChange={setHours} value={hours} />
       </GridContainer>
       <ActionsContainer>
         <Button>
