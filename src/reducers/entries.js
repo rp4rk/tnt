@@ -37,5 +37,8 @@ export default function entries(state = initialState, action) {
 export const getEntriesForProject = (state, projectId) => state[projectId];
 export const getEntryForProject = (state, projectId, entryId) =>
   state[projectId][entryId];
-export const getEntryProperty = (state, projectId, entryId, propertyId) =>
-  getEntryForProject(state, projectId, entryId)[propertyId];
+export const getEntryProperty = (state, projectId, entryId, propertyId) => {
+  const entry = getEntryForProject(state, projectId, entryId);
+
+  return entry && entry[propertyId];
+};
