@@ -54,3 +54,10 @@ export const getProjectName = (state, id) =>
  */
 export const getProjectActivities = (state, id) =>
   FromProjects.getProjectActivities(state[STATE_KEY], id);
+
+/**
+ * Get a project name by it's id
+ * @param {Object} state Scoped state
+ * @returns {Number} ID of the currently active project
+ */
+export const getActiveProject = state => state[STATE_KEY].activeProject;

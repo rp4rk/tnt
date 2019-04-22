@@ -2,7 +2,8 @@ import {
   GET_PROJECTS_START,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_FAILURE,
-  SET_PROJECT_ALIAS
+  SET_PROJECT_ALIAS,
+  SET_ACTIVE_PROJECT
 } from "../constants/actionTypes";
 import { getProjectEndpoint } from "../constants/endpoints";
 import { getRedmineAddress, getRedmineKey } from "../selectors/redmine";
@@ -55,10 +56,19 @@ export const fetchProjects = () => async (dispatch, getState) => {
       throw new Error("Failed to get a response from the server.");
 
     dispatch(getProjectsSuccess(projectJson));
+    dispatch(setActiveProject(projectJson.projects[0].id));
   } catch (err) {
     dispatch(getProjectsFailure(err));
   }
 };
+
+/**
+ * Set active project
+ */
+export const setActiveProject = id => ({
+  type: SET_ACTIVE_PROJECT,
+  payload: id
+});
 
 /**
  * Project Aliases

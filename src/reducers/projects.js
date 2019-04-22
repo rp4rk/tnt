@@ -2,13 +2,15 @@ import {
   GET_PROJECTS_START,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_FAILURE,
-  SET_PROJECT_ALIAS
+  SET_PROJECT_ALIAS,
+  SET_ACTIVE_PROJECT
 } from "../constants/actionTypes";
 
 const initialState = {
   loading: true,
   error: null,
   projects: {},
+  activeProject: null,
   projectAliases: {
     ...Object.entries(localStorage).reduce((aliases, [key, value]) => {
       if (key.indexOf("PROJECT_ALIAS") === -1) return aliases;
@@ -47,6 +49,10 @@ const REDUCERS = {
       ...state.projectAliases,
       [action.meta.id]: action.payload
     }
+  }),
+  [SET_ACTIVE_PROJECT]: (state, action) => ({
+    ...state,
+    activeProject: action.payload
   })
 };
 
@@ -95,3 +101,10 @@ export const getProjectName = (state, id) =>
  */
 export const getProjectActivities = (state, id) =>
   getProjectById(state, id).time_entry_activities;
+
+/**
+ * Get a project name by it's id
+ * @param {Object} state Scoped state
+ * @returns {Number} ID of the currently active project
+ */
+export const getActiveProject = state => state.activeProject;

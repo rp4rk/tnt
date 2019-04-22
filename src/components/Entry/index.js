@@ -7,15 +7,20 @@ import { containsString } from "../../util/string";
 import DateRangePicker from "../DateRangePicker";
 
 import { StyledCard, GridContainer, ActionsContainer } from "./styled";
+import { createTimeEntry } from "../../actions/entries";
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const mapStateToProps = (state, props) => ({
-  activities: getProjectActivities(state, props.project)
+  activities: getProjectActivities(state, props.projectId)
 });
 
-const Entry = ({ day, activities }) => {
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  createNewTimeEntry: () => dispatch(createTimeEntry(ownProps.projectId))
+});
+
+const Entry = ({ day, activities, createNewTimeEntry }) => {
   return (
     <StyledCard size="small" title="Time Entry">
       <GridContainer>
@@ -48,7 +53,7 @@ const Entry = ({ day, activities }) => {
           <Icon type="plus-circle" theme="filled" />
           Submit
         </Button>
-        <Button type="primary">
+        <Button type="primary" onClick={createNewTimeEntry}>
           <Icon type="plus-circle" theme="filled" />
           New Time Entry
         </Button>
@@ -57,4 +62,7 @@ const Entry = ({ day, activities }) => {
   );
 };
 
-export default connect(mapStateToProps)(Entry);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Entry);
