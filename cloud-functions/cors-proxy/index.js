@@ -1,4 +1,4 @@
-const request = require("request");
+const fetch = require("node-fetch");
 
 exports.corsProxy = (req, res) => {
   const { origin, host, ...headers } = req.headers;
@@ -10,13 +10,15 @@ exports.corsProxy = (req, res) => {
     "Cache-Control": "no-cache"
   });
 
-  if (req.method !== "GET" && req.method !== "OPTIONS") {
+  const permittedMethods = ["GET", "OPTIONS", "POST"];
+  if (!permittedMethods.includes(req.method)) {
     res.status(405).send();
     return;
   }
 
   if (req.method === "OPTIONS") {
     res.status(200).send();
+    return;
   }
 
   const url = req.query.url;
@@ -25,22 +27,22 @@ exports.corsProxy = (req, res) => {
     return;
   }
 
-  request.get(
-    {
-      url,
-      headers: {
-        "content-type": "application/json",
-        "x-redmine-api-key": headers["x-redmine-api-key"]
-      },
-      rejectUnauthorized: false
-    },
-    (error, response, body) => {
-      if (error) {
-        res.status(500).send(error);
-        return;
-      }
+  const method = req.method.toLowerCase();
+  const body = JSON.stringify(req.body);
 
-      res.send(body);
-    }
-  );
+  fetch(url, {
+    method,
+    headers: {
+      "content-type": "application/json",
+      "x-redmine-api-key": headers["x-redmine-api-key"]
+    },
+    body: body !== "{}" ? body : undefined
+  })
+    .then(async fetchResponse => {
+      const json = await fetchResponse.json();
+      res.send(json);
+    })
+    .catch(err => {
+      res.status(500).send(err);
+    });
 };
