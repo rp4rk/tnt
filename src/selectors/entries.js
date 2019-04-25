@@ -1,5 +1,4 @@
 import * as FromEntries from "../reducers/entries";
-import { parse, eachDay } from "date-fns";
 import { ENTRY_PROPERTY } from "../constants/entryProperties";
 import { validRedmineDescription, validRedmineHours } from "../util/redmine";
 import { entryPostsComplete } from "./entryposts";
