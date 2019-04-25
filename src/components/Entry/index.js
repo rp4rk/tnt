@@ -7,7 +7,7 @@ import { containsString } from "../../util/string";
 import DateRangePicker from "../DateRangePicker";
 
 import { StyledCard, GridContainer, ActionsContainer } from "./styled";
-import { createTimeEntry, updateTimeEntry } from "../../actions/entries";
+import { updateTimeEntry } from "../../actions/entries";
 import { getEntryProperty } from "../../selectors/entries";
 import { createPendingEntries } from "../../actions/entryposts";
 
@@ -21,7 +21,6 @@ const mapStateToProps = (state, { projectId, entryId }) => ({
 });
 
 const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
-  createNewTimeEntry: () => dispatch(createTimeEntry(projectId)),
   setActivityId: value =>
     dispatch(updateTimeEntry(projectId, entryId, "activityId", value)),
   setHours: value =>
@@ -33,7 +32,6 @@ const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
 
 const Entry = ({
   activities,
-  createNewTimeEntry,
   createPendingEntries,
   setHours,
   setComments,
@@ -75,10 +73,6 @@ const Entry = ({
         <Button onClick={createPendingEntries}>
           <Icon type="plus-circle" theme="filled" />
           Submit
-        </Button>
-        <Button type="primary" onClick={createNewTimeEntry}>
-          <Icon type="plus-circle" theme="filled" />
-          New Time Entry
         </Button>
       </ActionsContainer>
     </StyledCard>
