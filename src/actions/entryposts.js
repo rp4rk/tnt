@@ -16,7 +16,8 @@ import { redmineDate } from "../util/redmine";
 export const createPendingEntriesStart = (projectId, entryId, date) => ({
   type: CREATE_PENDING_ENTRY_START,
   payload: {
-    loading: true
+    loading: true,
+    complete: false
   },
   meta: {
     projectId,
@@ -29,7 +30,8 @@ export const createPendingEntriesStart = (projectId, entryId, date) => ({
 export const createPendingEntriesSuccess = (projectId, entryId, date) => ({
   type: CREATE_PENDING_ENTRY_SUCCESS,
   payload: {
-    loading: false
+    loading: false,
+    complete: true
   },
   meta: {
     projectId,
@@ -46,7 +48,8 @@ export const createPendingEntriesFailure = (
 ) => ({
   type: CREATE_PENDING_ENTRY_FAILURE,
   payload: {
-    loading: false
+    loading: false,
+    complete: false
   },
   meta: {
     projectId,
@@ -60,8 +63,6 @@ export const createPendingEntries = (projectId, entryId) => (
   dispatch,
   getState
 ) => {
-  dispatch(createPendingEntriesStart(projectId, entryId));
-
   const state = getState();
   const host = getRedmineAddress(state);
   const key = getRedmineKey(state);
@@ -79,24 +80,26 @@ export const createPendingEntries = (projectId, entryId) => (
     const { hours, activityId, comments } = entry;
 
     try {
-      const response = await fetch(getTimeEntryEndpoint(host), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Redmine-Api-key": key
-        },
-        body: JSON.stringify({
-          time_entry: {
-            project_id: projectId,
-            activity_id: activityId,
-            spent_on: redmineDate(date),
-            comments,
-            hours
-          }
-        })
-      });
+      // const response = await fetch(getTimeEntryEndpoint(host), {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "X-Redmine-Api-key": key
+      //   },
+      //   body: JSON.stringify({
+      //     time_entry: {
+      //       project_id: projectId,
+      //       activity_id: activityId,
+      //       spent_on: redmineDate(date),
+      //       comments,
+      //       hours
+      //     }
+      //   })
+      // });
 
-      dispatch(createPendingEntriesSuccess(projectId, entryId, date));
+      setTimeout(() => {
+        dispatch(createPendingEntriesSuccess(projectId, entryId, date));
+      }, 2000);
     } catch (error) {
       dispatch(createPendingEntriesFailure(projectId, entryId, date, error));
     }
