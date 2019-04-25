@@ -80,26 +80,24 @@ export const createPendingEntries = (projectId, entryId) => (
     const { hours, activityId, comments } = entry;
 
     try {
-      // const response = await fetch(getTimeEntryEndpoint(host), {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "X-Redmine-Api-key": key
-      //   },
-      //   body: JSON.stringify({
-      //     time_entry: {
-      //       project_id: projectId,
-      //       activity_id: activityId,
-      //       spent_on: redmineDate(date),
-      //       comments,
-      //       hours
-      //     }
-      //   })
-      // });
+      await fetch(getTimeEntryEndpoint(host), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Redmine-Api-key": key
+        },
+        body: JSON.stringify({
+          time_entry: {
+            project_id: projectId,
+            activity_id: activityId,
+            spent_on: redmineDate(date),
+            comments,
+            hours
+          }
+        })
+      });
 
-      setTimeout(() => {
-        dispatch(createPendingEntriesSuccess(projectId, entryId, date));
-      }, 2000);
+      dispatch(createPendingEntriesSuccess(projectId, entryId, date));
     } catch (error) {
       dispatch(createPendingEntriesFailure(projectId, entryId, date, error));
     }
