@@ -20,8 +20,12 @@ export const GridContainer = styled.div`
 export const ActionsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: ${({ complete }) =>
+    complete ? "#4edd4e" : "rgba(0, 0, 0, 0.05)"};
+  color: white;
+  font-weight: 500;
   padding: 12px;
   border-radius: 3px;
 

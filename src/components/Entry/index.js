@@ -8,8 +8,15 @@ import DateRangePicker from "../DateRangePicker";
 
 import { StyledCard, GridContainer, ActionsContainer } from "./styled";
 import { updateTimeEntry } from "../../actions/entries";
-import { getEntryProperty } from "../../selectors/entries";
+import {
+  getEntryProperty,
+  entrySubmissionDisabled
+} from "../../selectors/entries";
 import { createPendingEntries } from "../../actions/entryposts";
+import {
+  entryPostsComplete,
+  entryPostsLoading
+} from "../../selectors/entryposts";
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -17,7 +24,10 @@ const { Option } = Select;
 const mapStateToProps = (state, { projectId, entryId }) => ({
   activities: getProjectActivities(state, projectId),
   hours: getEntryProperty(state, projectId, entryId, "hours"),
-  comments: getEntryProperty(state, projectId, entryId, "comments")
+  comments: getEntryProperty(state, projectId, entryId, "comments"),
+  disableSubmit: entrySubmissionDisabled(state, projectId, entryId),
+  complete: entryPostsComplete(state, projectId, entryId),
+  loading: entryPostsLoading(state, projectId, entryId)
 });
 
 const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
@@ -39,7 +49,10 @@ const Entry = ({
   hours,
   comments,
   projectId,
-  entryId
+  entryId,
+  disableSubmit,
+  complete,
+  loading
 }) => {
   return (
     <StyledCard size="small" title="Time Entry">
@@ -69,11 +82,20 @@ const Entry = ({
         <Text>Hours</Text>
         <InputNumber onChange={setHours} value={hours} />
       </GridContainer>
-      <ActionsContainer>
-        <Button onClick={createPendingEntries}>
-          <Icon type="plus-circle" theme="filled" />
-          Submit
-        </Button>
+      <ActionsContainer complete={complete}>
+        {!complete && !loading && (
+          <Button disabled={disableSubmit} onClick={createPendingEntries}>
+            <Icon type="plus-circle" theme="filled" />
+            Submit
+          </Button>
+        )}
+        {loading && <Icon style={{ color: "black" }} type="loading" />}
+        {complete && (
+          <>
+            <span>Entries submitted successfully!</span>
+            <Icon type="check-circle" />
+          </>
+        )}
       </ActionsContainer>
     </StyledCard>
   );

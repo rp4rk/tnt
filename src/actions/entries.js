@@ -9,8 +9,8 @@ export const createTimeEntry = projectId => ({
   payload: {
     projectId,
     hours: 0,
-    activityId: "",
-    comments: "",
+    activityId: null,
+    comments: null,
     fromDate: null,
     toDate: null,
     includeWeekends: false

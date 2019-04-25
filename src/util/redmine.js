@@ -21,3 +21,11 @@ export const isValidApiKey = key => key && String(key).length === 40;
  * @returns {String} A redmine formatted date
  */
 export const redmineDate = date => format(date, "YYYY-MM-DD");
+
+export const validRedmineDescription = val => {
+  if (!val) return false;
+
+  return val.length > 6 && val.length <= 255;
+};
+
+export const validRedmineHours = num => num > 0;

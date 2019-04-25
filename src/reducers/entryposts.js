@@ -4,7 +4,7 @@ import {
   CREATE_PENDING_ENTRY_FAILURE
 } from "../constants/actionTypes";
 import { redmineDate } from "../util/redmine";
-import { set } from "../util/object";
+import { set, get } from "../util/object";
 
 const initialState = {};
 
@@ -53,3 +53,22 @@ export default function entryposts(state = initialState, action) {
 }
 
 // Private selectors
+export const entryPostsComplete = (state, projectId, entryId) => {
+  const entryPosts = get([projectId, entryId], state);
+
+  if (!entryPosts) {
+    return false;
+  }
+
+  return !Object.values(entryPosts).find(entryPost => !entryPost.complete);
+};
+
+export const entryPostsLoading = (state, projectId, entryId) => {
+  const entryPosts = get([projectId, entryId], state);
+
+  if (!entryPosts) {
+    return false;
+  }
+
+  return Object.values(entryPosts).find(entryPost => entryPost.loading);
+};
