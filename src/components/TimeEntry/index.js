@@ -30,7 +30,7 @@ function TimeEntry({
 }) {
   useEffect(() => {
     getProjects();
-  }, []);
+  }, [getProjects]);
 
   return (
     <Tabs
