@@ -8,4 +8,4 @@ Clone the project and use `npm start`
 
 ## Contributing
 
-Please raise pull requests against develop with the format of `feature/short-description-of-feature`.
+See the CONTRIBUTING.md file 👀
