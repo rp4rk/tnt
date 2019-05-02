@@ -1,8 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Menu, Icon } from "antd";
 import { Link, withRouter } from "react-router-dom";
+import { getRedmineAddress, getRedmineKey} from "../../selectors/redmine";
 
-const Navigation = ({ location }) => {
+const mapStateToProps = state => ({
+  redmineAddress: getRedmineAddress(state),
+  redmineKey: getRedmineKey(state)
+});
+
+const Navigation = ({ location, redmineAddress, redmineKey }) => {
   const { pathname } = location;
 
   return (
@@ -18,7 +25,7 @@ const Navigation = ({ location }) => {
           <span>Settings</span>
         </Link>
       </Menu.Item>
-      <Menu.Item key="/entries">
+      <Menu.Item key="/entries" disabled={(!redmineAddress || !redmineKey)}>
         <Link to="entries">
           <Icon type="clock-circle" />
           <span>Time Entries</span>
@@ -28,4 +35,4 @@ const Navigation = ({ location }) => {
   );
 };
 
-export default withRouter(Navigation);
+export default withRouter(connect(mapStateToProps)(Navigation));
