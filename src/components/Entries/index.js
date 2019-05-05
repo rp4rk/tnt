@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Typography, Divider, Icon, Button } from "antd";
 import TimeEntry from "../TimeEntry";
 import { createTimeEntry } from "../../actions/entries";
@@ -22,17 +22,21 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Entries = ({ createNewTimeEntry, activeProjectId, redmineAddress, redmineKey }) => {
-  let entryMarkUp;
   if (!redmineAddress || !redmineKey) {
-    entryMarkUp = (
+    return <Redirect
+      to={{
+        pathname: "/settings",
+        isRedirected: true,
+      }}
+    />
+  }
+  
+  return (
+    <>
+      <Title level={2}>
+        <Icon type="clock-circle" /> Time Entries
+      </Title>
       <Text>
-        To add entries you need to insert a Redmine Address and Key <Link to="/settings">here</Link>
-      </Text>
-    )
-  } else {
-    entryMarkUp = (
-      <>
-        <Text>
           Draft your time entries here, don't worry about making mistakes they won't
           save until you say so!
         </Text>
@@ -47,16 +51,6 @@ const Entries = ({ createNewTimeEntry, activeProjectId, redmineAddress, redmineK
             New Time Entry
           </Button>
         </ActionHolder>
-      </>
-    )
-  }
-  
-  return (
-    <>
-      <Title level={2}>
-        <Icon type="clock-circle" /> Time Entries
-      </Title>
-      { entryMarkUp }
     </>
   )
 };

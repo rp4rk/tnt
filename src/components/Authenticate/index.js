@@ -4,11 +4,12 @@ import { AuthenticationForm } from "../AuthenticationForm";
 
 const { Title, Text } = Typography;
 
-export const Authenticate = () => (
+export const Authenticate = (props) => (
   <>
     <Title level={2}>
       <Icon type="setting" /> - Authenticate
     </Title>
+    { props.location.isRedirected && alert('Please provide Redmine settings.') }
     <Text>
       In order to work, we require your redmine address and API key.{" "}
       <strong>
