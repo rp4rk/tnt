@@ -6,10 +6,10 @@ const { Title, Text } = Typography;
 
 export const Authenticate = (props) => (
   <>
+  { props.location.isRedirected && alert('Please provide Redmine settings.') }
     <Title level={2}>
       <Icon type="setting" /> - Authenticate
     </Title>
-    { props.location.isRedirected && alert('Please provide Redmine settings.') }
     <Text>
       In order to work, we require your redmine address and API key.{" "}
       <strong>
