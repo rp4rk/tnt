@@ -1,4 +1,4 @@
-import * as FromEntryPosts from '../reducers/entryposts';
+import * as FromEntryPosts from 'reducers/entryposts';
 
 const STATE_KEY = 'entryposts';
 

@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Typography, Divider, Icon, Button } from 'antd';
-import TimeEntry from '../TimeEntry';
-import { createTimeEntry } from '../../actions/entries';
-import { getActiveProject } from '../../selectors/projects';
-import { getRedmineAddress, getRedmineKey } from '../../selectors/redmine';
+
+import TimeEntry from 'components/TimeEntry';
+import { createTimeEntry } from 'actions/entries';
+import { getActiveProject } from 'selectors/projects';
+import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 import { ActionHolder } from './styled';
 
 const { Title, Text } = Typography;

@@ -1,6 +1,6 @@
-import { GET_PROJECTS_SUCCESS } from '../constants/actionTypes';
-import { createTimeEntry } from '../actions/entries';
-import { getEntriesForProject } from '../selectors/entries';
+import { GET_PROJECTS_SUCCESS } from 'constants/actionTypes';
+import { createTimeEntry } from 'actions/entries';
+import { getEntriesForProject } from 'selectors/entries';
 
 /**
  * Creates a default entry for any projects that enter our store

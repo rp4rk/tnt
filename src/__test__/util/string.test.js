@@ -1,4 +1,4 @@
-import { containsString } from '../../util/string';
+import { containsString } from 'util/string';
 
 describe('string utilities', () => {
   it('returns true if the initial string has an instance of the latter string', () => {

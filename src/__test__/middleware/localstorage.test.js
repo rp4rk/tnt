@@ -1,4 +1,4 @@
-import { localstorage } from '../../middleware/localstorage';
+import { localstorage } from 'middleware/localstorage';
 
 describe('localstorage middleware', () => {
   beforeEach(() => {

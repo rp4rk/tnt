@@ -1,11 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 
-import { localstorage } from '../../middleware/localstorage';
-import { setRedmineAddress, setRedmineKey } from '../../actions/redmine';
-import {
-  SET_REDMINE_ADDRESS,
-  SET_REDMINE_KEY
-} from '../../constants/actionTypes';
+import { localstorage } from 'middleware/localstorage';
+import { setRedmineAddress, setRedmineKey } from 'actions/redmine';
+import { SET_REDMINE_ADDRESS, SET_REDMINE_KEY } from 'constants/actionTypes';
 
 const middlewares = [localstorage];
 const mockStore = configureMockStore(middlewares);

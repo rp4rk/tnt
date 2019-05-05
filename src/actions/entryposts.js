@@ -2,13 +2,13 @@ import {
   CREATE_PENDING_ENTRY_START,
   CREATE_PENDING_ENTRY_SUCCESS,
   CREATE_PENDING_ENTRY_FAILURE
-} from '../constants/actionTypes';
-import { getEntryForProject } from '../selectors/entries';
-import { dateRange } from '../util/date';
+} from 'constants/actionTypes';
+import { getEntryForProject } from 'selectors/entries';
+import { dateRange } from 'util/date';
 import { isWeekend } from 'date-fns';
-import { getTimeEntryEndpoint } from '../constants/endpoints';
-import { getRedmineAddress, getRedmineKey } from '../selectors/redmine';
-import { redmineDate } from '../util/redmine';
+import { getTimeEntryEndpoint } from 'constants/endpoints';
+import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
+import { redmineDate } from 'util/redmine';
 
 /**
  * Post entries

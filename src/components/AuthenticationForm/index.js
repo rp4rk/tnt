@@ -2,10 +2,10 @@ import React from 'react';
 import { Form, Input, Button, Icon, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 
-import { getRedmineKey, getRedmineAddress } from '../../selectors/redmine';
-import { useInputWithValidation } from '../../util/useInput';
-import { isValidApiKey, isSecureUrl } from '../../util/redmine';
-import { setRedmineAddress, setRedmineKey } from '../../actions/redmine';
+import { getRedmineKey, getRedmineAddress } from 'selectors/redmine';
+import { useInputWithValidation } from 'util/useInput';
+import { isValidApiKey, isSecureUrl } from 'util/redmine';
+import { setRedmineAddress, setRedmineKey } from 'actions/redmine';
 
 const mapStateToProps = state => ({
   storedKey: getRedmineKey(state),

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Input } from 'antd';
 import styled from 'styled-components';
-import { setProjectAlias } from '../../actions/projects';
-import { useInput } from '../../util/useInput';
-import { getProjectName } from '../../selectors/projects';
+import { setProjectAlias } from 'actions/projects';
+import { useInput } from 'util/useInput';
+import { getProjectName } from 'selectors/projects';
 
 const TabWrapper = styled.div`
   display: flex;

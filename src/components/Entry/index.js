@@ -2,21 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Select, InputNumber, Input, Typography, Button, Icon } from 'antd';
 
-import { getProjectActivities } from '../../selectors/projects';
-import { containsString } from '../../util/string';
-import DateRangePicker from '../DateRangePicker';
+import { getProjectActivities } from 'selectors/projects';
+import { containsString } from 'util/string';
+import DateRangePicker from 'components/DateRangePicker';
 
 import { StyledCard, GridContainer, ActionsContainer } from './styled';
-import { updateTimeEntry } from '../../actions/entries';
-import {
-  getEntryProperty,
-  entrySubmissionDisabled
-} from '../../selectors/entries';
-import { createPendingEntries } from '../../actions/entryposts';
-import {
-  entryPostsComplete,
-  entryPostsLoading
-} from '../../selectors/entryposts';
+import { updateTimeEntry } from 'actions/entries';
+import { getEntryProperty, entrySubmissionDisabled } from 'selectors/entries';
+import { createPendingEntries } from 'actions/entryposts';
+import { entryPostsComplete, entryPostsLoading } from 'selectors/entryposts';
 
 const { Text } = Typography;
 const { Option } = Select;

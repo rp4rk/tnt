@@ -1,6 +1,6 @@
-import * as FromEntries from '../reducers/entries';
-import { ENTRY_PROPERTY } from '../constants/entryProperties';
-import { validRedmineDescription, validRedmineHours } from '../util/redmine';
+import * as FromEntries from 'reducers/entries';
+import { ENTRY_PROPERTY } from 'constants/entryProperties';
+import { validRedmineDescription, validRedmineHours } from 'util/redmine';
 import { entryPostsComplete } from './entryposts';
 
 const STATE_KEY = 'entries';
