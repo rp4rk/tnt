@@ -4,10 +4,10 @@ import { Layout } from 'antd';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import { AppView, ContentContainer, ContentView } from './styled';
-import { Authenticate } from './components/Authenticate';
 import { store } from 'store';
-import Entries from './components/Entries';
-import Navigation from './components/Navigation';
+import { Authenticate } from 'components/Authenticate';
+import Entries from 'components/Entries';
+import Navigation from 'components/Navigation';
 const { Sider } = Layout;
 
 function App() {
