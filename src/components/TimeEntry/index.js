@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { Tabs } from "antd";
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Tabs } from 'antd';
 
-import { fetchProjects, setActiveProject } from "../../actions/projects";
-import { getActiveProjects, getActiveProject } from "../../selectors/projects";
-import PreferenceTab from "./PreferenceTab";
-import Entry from "../Entry";
-import { getEntriesForProject } from "../../selectors/entries";
+import { fetchProjects, setActiveProject } from 'actions/projects';
+import { getActiveProjects, getActiveProject } from 'selectors/projects';
+import PreferenceTab from './PreferenceTab';
+import Entry from 'components/Entry';
+import { getEntriesForProject } from 'selectors/entries';
 
 const { TabPane } = Tabs;
 

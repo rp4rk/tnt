@@ -1,11 +1,11 @@
-import React from "react";
-import { Form, Input, Button, Icon, Tooltip } from "antd";
-import { connect } from "react-redux";
+import React from 'react';
+import { Form, Input, Button, Icon, Tooltip } from 'antd';
+import { connect } from 'react-redux';
 
-import { getRedmineKey, getRedmineAddress } from "../../selectors/redmine";
-import { useInputWithValidation } from "../../util/useInput";
-import { isValidApiKey, isSecureUrl } from "../../util/redmine";
-import { setRedmineAddress, setRedmineKey } from "../../actions/redmine";
+import { getRedmineKey, getRedmineAddress } from 'selectors/redmine';
+import { useInputWithValidation } from 'util/useInput';
+import { isValidApiKey, isSecureUrl } from 'util/redmine';
+import { setRedmineAddress, setRedmineKey } from 'actions/redmine';
 
 const mapStateToProps = state => ({
   storedKey: getRedmineKey(state),
@@ -46,8 +46,8 @@ function UnconnectedAuthenticationForm({
     >
       <Form.Item
         label="Redmine Address"
-        validateStatus={addressValid || addressPristine ? null : "error"}
-        help={addressValid || addressPristine ? null : "HTTPS only"}
+        validateStatus={addressValid || addressPristine ? null : 'error'}
+        help={addressValid || addressPristine ? null : 'HTTPS only'}
       >
         <Input
           prefix={<Icon type="global" />}
@@ -59,7 +59,7 @@ function UnconnectedAuthenticationForm({
       </Form.Item>
       <Form.Item
         label="API Key"
-        validateStatus={apiKeyValid || apiPristine ? null : "error"}
+        validateStatus={apiKeyValid || apiPristine ? null : 'error'}
         help={
           apiKeyValid || apiPristine
             ? null

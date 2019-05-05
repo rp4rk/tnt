@@ -1,30 +1,24 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Select, InputNumber, Input, Typography, Button, Icon } from "antd";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Select, InputNumber, Input, Typography, Button, Icon } from 'antd';
 
-import { getProjectActivities } from "../../selectors/projects";
-import { containsString } from "../../util/string";
-import DateRangePicker from "../DateRangePicker";
+import { getProjectActivities } from 'selectors/projects';
+import { containsString } from 'util/string';
+import DateRangePicker from 'components/DateRangePicker';
 
-import { StyledCard, GridContainer, ActionsContainer } from "./styled";
-import { updateTimeEntry } from "../../actions/entries";
-import {
-  getEntryProperty,
-  entrySubmissionDisabled
-} from "../../selectors/entries";
-import { createPendingEntries } from "../../actions/entryposts";
-import {
-  entryPostsComplete,
-  entryPostsLoading
-} from "../../selectors/entryposts";
+import { StyledCard, GridContainer, ActionsContainer } from './styled';
+import { updateTimeEntry } from 'actions/entries';
+import { getEntryProperty, entrySubmissionDisabled } from 'selectors/entries';
+import { createPendingEntries } from 'actions/entryposts';
+import { entryPostsComplete, entryPostsLoading } from 'selectors/entryposts';
 
 const { Text } = Typography;
 const { Option } = Select;
 
 const mapStateToProps = (state, { projectId, entryId }) => ({
   activities: getProjectActivities(state, projectId),
-  hours: getEntryProperty(state, projectId, entryId, "hours"),
-  comments: getEntryProperty(state, projectId, entryId, "comments"),
+  hours: getEntryProperty(state, projectId, entryId, 'hours'),
+  comments: getEntryProperty(state, projectId, entryId, 'comments'),
   disableSubmit: entrySubmissionDisabled(state, projectId, entryId),
   complete: entryPostsComplete(state, projectId, entryId),
   loading: entryPostsLoading(state, projectId, entryId)
@@ -32,11 +26,11 @@ const mapStateToProps = (state, { projectId, entryId }) => ({
 
 const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
   setActivityId: value =>
-    dispatch(updateTimeEntry(projectId, entryId, "activityId", value)),
+    dispatch(updateTimeEntry(projectId, entryId, 'activityId', value)),
   setHours: value =>
-    dispatch(updateTimeEntry(projectId, entryId, "hours", value)),
+    dispatch(updateTimeEntry(projectId, entryId, 'hours', value)),
   setComments: e =>
-    dispatch(updateTimeEntry(projectId, entryId, "comments", e.target.value)),
+    dispatch(updateTimeEntry(projectId, entryId, 'comments', e.target.value)),
   createPendingEntries: () => dispatch(createPendingEntries(projectId, entryId))
 });
 
@@ -89,7 +83,7 @@ const Entry = ({
             Submit
           </Button>
         )}
-        {loading && <Icon style={{ color: "black" }} type="loading" />}
+        {loading && <Icon style={{ color: 'black' }} type="loading" />}
         {complete && (
           <>
             <span>Entries submitted successfully!</span>

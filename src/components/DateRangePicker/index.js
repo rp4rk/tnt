@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { DatePicker, Checkbox } from "antd";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { DatePicker, Checkbox } from 'antd';
+import styled from 'styled-components';
 
-import { updateTimeEntry } from "../../actions/entries";
-import { getEntryProperty } from "../../selectors/entries";
+import { updateTimeEntry } from 'actions/entries';
+import { getEntryProperty } from 'selectors/entries';
 
 const { RangePicker } = DatePicker;
 
@@ -13,24 +13,24 @@ const Controls = styled.div`
 `;
 
 const mapStateToProps = (state, { projectId, entryId }) => ({
-  fromDate: getEntryProperty(state, projectId, entryId, "fromDate"),
-  toDate: getEntryProperty(state, projectId, entryId, "toDate"),
+  fromDate: getEntryProperty(state, projectId, entryId, 'fromDate'),
+  toDate: getEntryProperty(state, projectId, entryId, 'toDate'),
   includeWeekends: getEntryProperty(
     state,
     projectId,
     entryId,
-    "includeWeekends"
+    'includeWeekends'
   )
 });
 
 const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
   setFromDate: value =>
-    dispatch(updateTimeEntry(projectId, entryId, "fromDate", value.toDate())),
+    dispatch(updateTimeEntry(projectId, entryId, 'fromDate', value.toDate())),
   setToDate: value =>
-    dispatch(updateTimeEntry(projectId, entryId, "toDate", value.toDate())),
+    dispatch(updateTimeEntry(projectId, entryId, 'toDate', value.toDate())),
   setIncludeWeekends: e =>
     dispatch(
-      updateTimeEntry(projectId, entryId, "includeWeekends", e.target.checked)
+      updateTimeEntry(projectId, entryId, 'includeWeekends', e.target.checked)
     )
 });
 
@@ -64,8 +64,8 @@ const DateRangePicker = ({
       </Controls>
 
       {(showRangePicker && (
-        <RangePicker style={{ width: "100%" }} onChange={splitRangeSet} />
-      )) || <DatePicker style={{ width: "100%" }} onChange={setFromDate} />}
+        <RangePicker style={{ width: '100%' }} onChange={splitRangeSet} />
+      )) || <DatePicker style={{ width: '100%' }} onChange={setFromDate} />}
     </div>
   );
 };

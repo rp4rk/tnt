@@ -2,7 +2,7 @@ import {
   CREATE_TIME_ENTRY,
   UPDATE_TIME_ENTRY,
   DELETE_TIME_ENTRY
-} from "../constants/actionTypes";
+} from 'constants/actionTypes';
 
 export const createTimeEntry = projectId => ({
   type: CREATE_TIME_ENTRY,

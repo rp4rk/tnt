@@ -1,4 +1,4 @@
-import { parse, eachDay } from "date-fns";
+import { parse, eachDay } from 'date-fns';
 
 /**
  * Generates a range of days between the two provided dates
