@@ -1,4 +1,4 @@
-import { CREATE_TIME_ENTRY, UPDATE_TIME_ENTRY } from "../constants/actionTypes";
+import { CREATE_TIME_ENTRY, UPDATE_TIME_ENTRY } from '../constants/actionTypes';
 
 const initialState = {};
 

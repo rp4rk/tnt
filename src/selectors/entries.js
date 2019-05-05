@@ -1,9 +1,9 @@
-import * as FromEntries from "../reducers/entries";
-import { ENTRY_PROPERTY } from "../constants/entryProperties";
-import { validRedmineDescription, validRedmineHours } from "../util/redmine";
-import { entryPostsComplete } from "./entryposts";
+import * as FromEntries from '../reducers/entries';
+import { ENTRY_PROPERTY } from '../constants/entryProperties';
+import { validRedmineDescription, validRedmineHours } from '../util/redmine';
+import { entryPostsComplete } from './entryposts';
 
-const STATE_KEY = "entries";
+const STATE_KEY = 'entries';
 
 export const getEntriesForProject = (state, projectId) =>
   FromEntries.getEntriesForProject(state[STATE_KEY], projectId);

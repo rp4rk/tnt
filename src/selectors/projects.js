@@ -1,7 +1,7 @@
-import * as FromProjects from "../reducers/projects";
-import { PROJECT_STATUS } from "../constants/projectStatus";
+import * as FromProjects from '../reducers/projects';
+import { PROJECT_STATUS } from '../constants/projectStatus';
 
-const STATE_KEY = "projects";
+const STATE_KEY = 'projects';
 
 /**
  * Gets an array of all projects

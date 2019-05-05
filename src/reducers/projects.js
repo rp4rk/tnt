@@ -4,7 +4,7 @@ import {
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT
-} from "../constants/actionTypes";
+} from '../constants/actionTypes';
 
 const initialState = {
   loading: true,
@@ -13,7 +13,7 @@ const initialState = {
   activeProject: null,
   projectAliases: {
     ...Object.entries(localStorage).reduce((aliases, [key, value]) => {
-      if (key.indexOf("PROJECT_ALIAS") === -1) return aliases;
+      if (key.indexOf('PROJECT_ALIAS') === -1) return aliases;
 
       const id = key.match(/\d+/g);
       aliases[id] = value;

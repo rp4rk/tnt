@@ -1,6 +1,6 @@
-import * as FromRedmine from "../reducers/redmine";
+import * as FromRedmine from '../reducers/redmine';
 
-const STATE_KEY = "redmine";
+const STATE_KEY = 'redmine';
 
 /**
  * Get the current API key for redmine

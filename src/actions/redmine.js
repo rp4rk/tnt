@@ -1,11 +1,11 @@
-import { SET_REDMINE_ADDRESS, SET_REDMINE_KEY } from "../constants/actionTypes";
+import { SET_REDMINE_ADDRESS, SET_REDMINE_KEY } from '../constants/actionTypes';
 
 export const setRedmineAddress = address => ({
   type: SET_REDMINE_ADDRESS,
   payload: address,
   meta: {
     store: {
-      key: "redmineAddress"
+      key: 'redmineAddress'
     }
   }
 });
@@ -15,7 +15,7 @@ export const setRedmineKey = key => ({
   payload: key,
   meta: {
     store: {
-      key: "redmineKey"
+      key: 'redmineKey'
     }
   }
 });
