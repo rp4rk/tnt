@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Divider, Icon } from 'antd';
-import { AuthenticationForm } from '../AuthenticationForm';
+import { AuthenticationForm } from 'components/AuthenticationForm';
 
 const { Title, Text } = Typography;
 

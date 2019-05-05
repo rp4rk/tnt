@@ -1,5 +1,5 @@
-import { defaultTimeEntries } from '../../middleware/defaultTimeEntries';
-import { GET_PROJECTS_SUCCESS } from '../../constants/actionTypes';
+import { defaultTimeEntries } from 'middleware/defaultTimeEntries';
+import { GET_PROJECTS_SUCCESS } from 'constants/actionTypes';
 
 describe('defaultTimeEntries', () => {
   it('only accepts GET_PROJECTS_SUCCESS', () => {

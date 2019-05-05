@@ -4,7 +4,7 @@ import {
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT
-} from '../constants/actionTypes';
+} from 'constants/actionTypes';
 
 const initialState = {
   loading: true,

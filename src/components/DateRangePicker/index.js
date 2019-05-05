@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { DatePicker, Checkbox } from 'antd';
 import styled from 'styled-components';
 
-import { updateTimeEntry } from '../../actions/entries';
-import { getEntryProperty } from '../../selectors/entries';
+import { updateTimeEntry } from 'actions/entries';
+import { getEntryProperty } from 'selectors/entries';
 
 const { RangePicker } = DatePicker;
 

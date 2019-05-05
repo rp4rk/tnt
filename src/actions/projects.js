@@ -4,9 +4,9 @@ import {
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT
-} from '../constants/actionTypes';
-import { getProjectEndpoint } from '../constants/endpoints';
-import { getRedmineAddress, getRedmineKey } from '../selectors/redmine';
+} from 'constants/actionTypes';
+import { getProjectEndpoint } from 'constants/endpoints';
+import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 
 /**
  * Fetching Projects

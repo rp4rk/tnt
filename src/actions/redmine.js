@@ -1,4 +1,4 @@
-import { SET_REDMINE_ADDRESS, SET_REDMINE_KEY } from '../constants/actionTypes';
+import { SET_REDMINE_ADDRESS, SET_REDMINE_KEY } from 'constants/actionTypes';
 
 export const setRedmineAddress = address => ({
   type: SET_REDMINE_ADDRESS,

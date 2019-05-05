@@ -2,20 +2,20 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
 
-import { localstorage } from '../../middleware/localstorage';
+import { localstorage } from 'middleware/localstorage';
 import {
   GET_PROJECTS_START,
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT
-} from '../../constants/actionTypes';
+} from 'constants/actionTypes';
 import {
   getProjectsStart,
   fetchProjects,
   setProjectAlias
-} from '../../actions/projects';
-import { getProjectEndpoint } from '../../constants/endpoints';
+} from 'actions/projects';
+import { getProjectEndpoint } from 'constants/endpoints';
 
 const middleware = [thunk, localstorage];
 const mockStore = configureMockStore(middleware);

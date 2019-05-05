@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import { getRedmineAddress, getRedmineKey } from '../../selectors/redmine';
+import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 
 const mapStateToProps = state => ({
   redmineAddress: getRedmineAddress(state),

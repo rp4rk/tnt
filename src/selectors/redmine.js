@@ -1,4 +1,4 @@
-import * as FromRedmine from '../reducers/redmine';
+import * as FromRedmine from 'reducers/redmine';
 
 const STATE_KEY = 'redmine';
 
