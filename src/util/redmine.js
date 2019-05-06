@@ -5,7 +5,8 @@ import { format } from 'date-fns';
  * @param {String} url A URL
  * @returns {Boolean} Whether or not the provided URL is secure
  */
-export const isSecureUrl = url => url && url.match(/^https:\/\//g);
+export const isSecureUrl = url =>
+  process.env.NODE_ENV === 'development' || (url && url.match(/^https:\/\//g));
 
 /**
  * Determines if the provided API key is valid

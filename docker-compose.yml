@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  redmine:
+    image: redmine
+    container_name: redmine
+    ports:
+      - 3002:3000
+    volumes:
+      - ./redmine:/usr/src/redmine/sqlite
+  # Using an nginx reverse proxy as redmine doesn't support CORS
+  nginx:
+    image: nginx:latest
+    container_name: tnt-nginx
+    volumes:
+      - ./redmine/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 3001:80
+  tnt-frontend:
+    build: .
+    container_name: tnt
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
