@@ -84,7 +84,7 @@ export const createPendingEntries = (projectId, entryId) => (
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Redmine-Api-key': key
+          'X-Redmine-Api-Key': key
         },
         body: JSON.stringify({
           time_entry: {
