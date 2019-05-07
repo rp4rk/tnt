@@ -11,7 +11,8 @@ export const Authenticate = props => (
       <Icon type="setting" /> - Authenticate
     </Title>
     <Text>
-      In order to work, we require your redmine address and API key.{' '}
+      {process.env.NODE_ENV} In order to work, we require your redmine address
+      and API key.{' '}
       <strong>
         These details aren't stored anywhere else aside from your computer.
       </strong>
