@@ -1,12 +1,4 @@
 pipeline:
-  restore-cache:
-    image: drillster/drone-volume-cache
-    restore: true
-    mount:
-      - ./.npm-cache
-      - ./node_modules
-    volumes:
-      - /tmp/cache:/cache
   install:
     image: node/lts-alpine
     commands:
