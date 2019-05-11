@@ -1,5 +1,7 @@
 # TNT Client for Redmine
 
+[![Build Status](https://pipeline.redmine-bad.site/api/badges/rp4rk/tnt/status.svg?ref=/refs/heads/develop)](https://pipeline.redmine-bad.site/rp4rk/tnt)
+
 This client is a WIP to make entering data to redmine a much more accurate and easy task.
 
 ## Running the Project
