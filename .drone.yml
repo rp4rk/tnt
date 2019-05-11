@@ -1,0 +1,21 @@
+pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./.npm-cache
+      - ./node_modules
+    volumes:
+      - /tmp/cache:/cache
+  install:
+    image: node/lts-alpine
+    commands:
+      - npm config set cache .npm-cache --global
+      - npm install --production
+  test:
+    image: node/lts-alpine
+    group: testing
+    environment:
+      CI: true
+    commands:
+      - npm run test
