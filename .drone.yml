@@ -1,6 +1,6 @@
 pipeline:
   install:
-    image: node/lts-alpine
+    image: node:lts-alpine
     commands:
       - npm config set cache .npm-cache --global
       - npm install --production
