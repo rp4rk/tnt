@@ -46,8 +46,6 @@ const IssuePrompt = ({ projectId, host, redmineKey }) => {
   // Get issues safely
   const issues = get(['issues'], data);
 
-  console.log(issues);
-
   return (
     <>
       <Select
