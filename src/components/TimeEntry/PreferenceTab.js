@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Input } from 'antd';
+import { Button, Input, Menu, Dropdown, Modal } from 'antd';
 import styled from 'styled-components';
 import { setProjectAlias } from 'actions/projects';
 import { useInput } from 'util/useInput';
 import { getProjectName } from 'selectors/projects';
+import IssuePrompt from 'components/IssuePrompt';
 
 const TabWrapper = styled.div`
   display: flex;
@@ -34,46 +35,63 @@ const mapDispatchToProps = (dispatch, props) => ({
   setProjectAlias: alias => dispatch(setProjectAlias(props.id, alias))
 });
 
-const PreferenceTab = ({ setProjectAlias, projectName }) => {
+const PreferenceTab = ({ setProjectAlias, projectName, id: projectId }) => {
   const [editing, toggleEditing] = useState(false);
+  const [settingIssue, toggleIssuePrompt] = useState(false);
   const [alias, setAlias] = useInput(projectName);
 
+  const menu = (
+    <Menu>
+      <Menu.Item onClick={() => toggleEditing(true)}>
+        <span>Set Project Name</span>
+      </Menu.Item>
+      <Menu.Item onClick={() => toggleIssuePrompt(true)}>
+        <span>Set Default Issue</span>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
-    <TabWrapper>
-      {(editing && (
-        <>
-          <TabButton
-            shape="circle-outline"
-            icon="save"
-            onClick={e => {
-              e.stopPropagation();
-              toggleEditing(false);
-              setProjectAlias(alias);
-            }}
-          />
-          <Input
-            autoFocus={true}
-            onChange={setAlias}
-            defaultValue={projectName}
-            onClick={e => {
-              e.stopPropagation();
-            }}
-          />
-        </>
-      )) || (
-        <>
-          <TabButton
-            shape="circle-outline"
-            icon="edit"
-            onClick={e => {
-              e.stopPropagation();
-              toggleEditing(true);
-            }}
-          />
-          <OverflowSpan>{projectName}</OverflowSpan>
-        </>
-      )}
-    </TabWrapper>
+    <>
+      <Modal
+        title={`Choose a Default Issue for ${projectName}.`}
+        visible={settingIssue}
+        footer={null}
+        onCancel={() => toggleIssuePrompt(false)}
+      >
+        <IssuePrompt projectId={projectId} />
+      </Modal>
+      <TabWrapper>
+        {(editing && (
+          <>
+            <TabButton
+              shape="circle-outline"
+              icon="save"
+              onClick={e => {
+                e.stopPropagation();
+                toggleEditing(false);
+                setProjectAlias(alias);
+              }}
+            />
+            <Input
+              autoFocus={true}
+              onChange={setAlias}
+              defaultValue={projectName}
+              onClick={e => {
+                e.stopPropagation();
+              }}
+            />
+          </>
+        )) || (
+          <>
+            <Dropdown overlay={menu}>
+              <TabButton shape="circle-outline" icon="setting" />
+            </Dropdown>
+            <OverflowSpan>{projectName}</OverflowSpan>
+          </>
+        )}
+      </TabWrapper>
+    </>
   );
 };
 
