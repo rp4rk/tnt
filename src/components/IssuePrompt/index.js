@@ -21,7 +21,7 @@ const ISSUE_FETCH_PARAMS = (key, issueSubject) => ({
   }
 });
 
-const IssuePrompt = ({ projectId, host, redmineKey }) => {
+const IssuePrompt = ({ projectId, host, redmineKey, onChange }) => {
   const [issueSubject, setIssueSubject] = useState(null);
   const [url, setUrl] = useState(null);
   const [params, setParams] = useState(null);
@@ -51,11 +51,12 @@ const IssuePrompt = ({ projectId, host, redmineKey }) => {
       <Select
         autoFocus
         showSearch
-        placeholder="Find an issue..."
-        style={{ width: '100%' }}
-        onSearch={debounce(value => setIssueSubject(value), 350)}
         filterOption={false}
+        style={{ width: '100%' }}
+        placeholder="Find an issue..."
         defaultActiveFirstOption={false}
+        onSearch={debounce(value => setIssueSubject(value), 350)}
+        onChange={onChange}
       >
         {issues &&
           issues.map(issue => (
