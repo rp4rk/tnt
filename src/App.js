@@ -8,11 +8,11 @@ import {
   Switch
 } from 'react-router-dom';
 
-import { AppView, ContentContainer, ContentView } from "./styled";
-import { Authenticate } from "./components/Authenticate";
-import { store } from "./store";
-import Entries from "./components/Entries";
-import Navigation from "./components/Navigation";
+import { AppView, ContentContainer, ContentView } from './styled';
+import { Authenticate } from './components/Authenticate';
+import { store } from './store';
+import Entries from './components/Entries';
+import Navigation from './components/Navigation';
 import EntryTable from './components/EntryTable';
 const { Sider } = Layout;
 
