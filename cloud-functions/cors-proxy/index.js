@@ -1,22 +1,22 @@
-const fetch = require("node-fetch");
+const fetch = require('node-fetch');
 
 exports.corsProxy = (req, res) => {
   const { origin, host, ...headers } = req.headers;
 
   res.set({
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "content-type, x-redmine-api-key",
-    "Content-Type": "application/json",
-    "Cache-Control": "no-cache"
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'content-type, x-redmine-api-key',
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache'
   });
 
-  const permittedMethods = ["GET", "OPTIONS", "POST"];
+  const permittedMethods = ['GET', 'OPTIONS', 'POST'];
   if (!permittedMethods.includes(req.method)) {
     res.status(405).send();
     return;
   }
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     res.status(200).send();
     return;
   }
@@ -33,10 +33,10 @@ exports.corsProxy = (req, res) => {
   fetch(url, {
     method,
     headers: {
-      "content-type": "application/json",
-      "x-redmine-api-key": headers["x-redmine-api-key"]
+      'content-type': 'application/json',
+      'x-redmine-api-key': headers['x-redmine-api-key']
     },
-    body: body !== "{}" ? body : undefined
+    body: body !== '{}' ? body : undefined
   })
     .then(async fetchResponse => {
       const json = await fetchResponse.json();

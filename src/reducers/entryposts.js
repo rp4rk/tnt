@@ -2,9 +2,9 @@ import {
   CREATE_PENDING_ENTRY_START,
   CREATE_PENDING_ENTRY_SUCCESS,
   CREATE_PENDING_ENTRY_FAILURE
-} from "../constants/actionTypes";
-import { redmineDate } from "../util/redmine";
-import { set, get } from "../util/object";
+} from 'constants/actionTypes';
+import { redmineDate } from 'util/redmine';
+import { set, get } from 'util/object';
 
 const initialState = {};
 

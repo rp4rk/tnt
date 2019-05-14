@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Card } from "antd";
+import styled from 'styled-components';
+import { Card } from 'antd';
 
 export const StyledCard = styled(Card)`
   && {
@@ -23,7 +23,7 @@ export const ActionsContainer = styled.div`
   align-items: center;
 
   background-color: ${({ complete }) =>
-    complete ? "#4edd4e" : "rgba(0, 0, 0, 0.05)"};
+    complete ? '#4edd4e' : 'rgba(0, 0, 0, 0.05)'};
   color: white;
   font-weight: 500;
   padding: 12px;

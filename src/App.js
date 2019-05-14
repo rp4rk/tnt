@@ -1,7 +1,12 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { Layout } from "antd";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import React from 'react';
+import { Provider } from 'react-redux';
+import { Layout } from 'antd';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
 
 import { AppView, ContentContainer, ContentView } from "./styled";
 import { Authenticate } from "./components/Authenticate";
@@ -21,14 +26,17 @@ function App() {
           </Sider>
           <ContentView>
             <ContentContainer>
-              <Route
-                exact
-                path="/"
-                component={() => <Redirect to="/settings" />}
-              />
-              <Route exact path="/settings" component={Authenticate} />
-              <Route exact path="/entries" component={Entries} />
-              <Route exact path="/table" component={EntryTable} />
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  component={() => <Redirect to="/settings" />}
+                />
+                <Route exact path="/settings" component={Authenticate} />
+                <Route exact path="/entries" component={Entries} />
+                <Route exact path="/table" component={EntryTable} />
+                <Route component={() => <Redirect to="/settings" />} />
+              </Switch>
             </ContentContainer>
           </ContentView>
         </AppView>

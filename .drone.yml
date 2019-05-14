@@ -1,0 +1,13 @@
+pipeline:
+  install:
+    image: node:lts-alpine
+    commands:
+      - npm config set cache .npm-cache --global
+      - npm install --production
+  test:
+    image: node:lts-alpine
+    group: testing
+    environment:
+      CI: true
+    commands:
+      - npm run test

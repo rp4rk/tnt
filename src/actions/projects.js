@@ -4,9 +4,9 @@ import {
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT
-} from "../constants/actionTypes";
-import { getProjectEndpoint } from "../constants/endpoints";
-import { getRedmineAddress, getRedmineKey } from "../selectors/redmine";
+} from 'constants/actionTypes';
+import { getProjectEndpoint } from 'constants/endpoints';
+import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 
 /**
  * Fetching Projects
@@ -43,17 +43,17 @@ export const fetchProjects = () => async (dispatch, getState) => {
 
   try {
     const projects = await fetch(getProjectEndpoint(host), {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
-        "X-Redmine-Api-Key": key
+        'Content-Type': 'application/json',
+        'X-Redmine-Api-Key': key
       }
     });
 
     const projectJson = await projects.json();
 
     if (projects.status !== 200)
-      throw new Error("Failed to get a response from the server.");
+      throw new Error('Failed to get a response from the server.');
 
     dispatch(getProjectsSuccess(projectJson));
     dispatch(setActiveProject(projectJson.projects[0].id));

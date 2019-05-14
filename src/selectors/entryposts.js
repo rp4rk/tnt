@@ -1,6 +1,6 @@
-import * as FromEntryPosts from "../reducers/entryposts";
+import * as FromEntryPosts from 'reducers/entryposts';
 
-const STATE_KEY = "entryposts";
+const STATE_KEY = 'entryposts';
 
 export const entryPostsComplete = (state, projectId, entryId) =>
   FromEntryPosts.entryPostsComplete(state[STATE_KEY], projectId, entryId);
