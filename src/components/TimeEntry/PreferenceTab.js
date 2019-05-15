@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Input, Menu, Dropdown, Modal } from 'antd';
 import styled from 'styled-components';
-import { setProjectAlias } from 'actions/projects';
+import { setProjectAlias, setProjectDefaultIssue } from 'actions/projects';
 import { useInput } from 'util/useInput';
-import { getProjectName } from 'selectors/projects';
+import { getProjectName, getProjectDefaultIssue } from 'selectors/projects';
 import IssuePrompt from 'components/IssuePrompt';
 
 const TabWrapper = styled.div`
@@ -28,14 +28,23 @@ const OverflowSpan = styled.span`
 `;
 
 const mapStateToProps = (state, props) => ({
-  projectName: getProjectName(state, props.id)
+  projectName: getProjectName(state, props.id),
+  projectDefaultIssue: getProjectDefaultIssue(state, props.id)
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  setProjectAlias: alias => dispatch(setProjectAlias(props.id, alias))
+  setProjectAlias: alias => dispatch(setProjectAlias(props.id, alias)),
+  setProjectDefaultIssue: issueId =>
+    dispatch(setProjectDefaultIssue(props.id, issueId))
 });
 
-const PreferenceTab = ({ setProjectAlias, projectName, id: projectId }) => {
+const PreferenceTab = ({
+  setProjectAlias,
+  projectName,
+  id: projectId,
+  setProjectDefaultIssue,
+  projectDefaultIssue
+}) => {
   const [editing, toggleEditing] = useState(false);
   const [settingIssue, toggleIssuePrompt] = useState(false);
   const [alias, setAlias] = useInput(projectName);
@@ -59,7 +68,14 @@ const PreferenceTab = ({ setProjectAlias, projectName, id: projectId }) => {
         footer={null}
         onCancel={() => toggleIssuePrompt(false)}
       >
-        <IssuePrompt projectId={projectId} />
+        <IssuePrompt
+          projectId={projectId}
+          initialValue={projectDefaultIssue}
+          onChange={val => {
+            setProjectDefaultIssue(val);
+            toggleIssuePrompt(false);
+          }}
+        />
       </Modal>
       <TabWrapper>
         {(editing && (

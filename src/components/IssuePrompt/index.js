@@ -21,7 +21,13 @@ const ISSUE_FETCH_PARAMS = (key, issueSubject) => ({
   }
 });
 
-const IssuePrompt = ({ projectId, host, redmineKey, onChange }) => {
+const IssuePrompt = ({
+  projectId,
+  host,
+  redmineKey,
+  onChange,
+  initialValue
+}) => {
   const [issueSubject, setIssueSubject] = useState(null);
   const [url, setUrl] = useState(null);
   const [params, setParams] = useState(null);
@@ -41,31 +47,37 @@ const IssuePrompt = ({ projectId, host, redmineKey, onChange }) => {
   }, [projectId, issueSubject, host]);
 
   // Fetch our data
-  const { data } = useFetch(url, params);
+  const { data, loading } = useFetch(url, params);
 
   // Get issues safely
   const issues = get(['issues'], data);
 
+  // Get the initial issue
+  const initialIssue = issues && issues.find(({ id }) => +id === +initialValue);
+
   return (
-    <>
-      <Select
-        autoFocus
-        showSearch
-        filterOption={false}
-        style={{ width: '100%' }}
-        placeholder="Find an issue..."
-        defaultActiveFirstOption={false}
-        onSearch={debounce(value => setIssueSubject(value), 350)}
-        onChange={onChange}
-      >
-        {issues &&
-          issues.map(issue => (
-            <Select.Option key={issue.id} value={issue.id}>
-              {issue.subject}
-            </Select.Option>
-          ))}
-      </Select>
-    </>
+    !loading && (
+      <>
+        <Select
+          autoFocus
+          showSearch
+          filterOption={false}
+          style={{ width: '100%' }}
+          placeholder="Find an issue..."
+          defaultActiveFirstOption={false}
+          defaultValue={initialIssue && initialIssue.subject}
+          onSearch={debounce(value => setIssueSubject(value), 350)}
+          onChange={onChange}
+        >
+          {issues &&
+            issues.map(issue => (
+              <Select.Option key={issue.id} value={issue.id}>
+                {issue.subject}
+              </Select.Option>
+            ))}
+        </Select>
+      </>
+    )
   );
 };
 
