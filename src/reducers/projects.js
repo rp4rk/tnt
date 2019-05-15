@@ -3,8 +3,10 @@ import {
   GET_PROJECTS_SUCCESS,
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
-  SET_ACTIVE_PROJECT
+  SET_ACTIVE_PROJECT,
+  SET_PROJECT_DEFAULT_ISSUE
 } from 'constants/actionTypes';
+import { buildStateFromLocalStorage } from 'util/object';
 
 const initialState = {
   loading: true,
@@ -12,14 +14,10 @@ const initialState = {
   projects: {},
   activeProject: null,
   projectAliases: {
-    ...Object.entries(localStorage).reduce((aliases, [key, value]) => {
-      if (key.indexOf('PROJECT_ALIAS') === -1) return aliases;
-
-      const id = key.match(/\d+/g);
-      aliases[id] = value;
-
-      return aliases;
-    }, {})
+    ...buildStateFromLocalStorage('PROJECT_ALIAS')
+  },
+  projectDefaultIssues: {
+    ...buildStateFromLocalStorage('PROJECT_DEFAULT_ISSUE')
   }
 };
 
@@ -53,6 +51,13 @@ const REDUCERS = {
   [SET_ACTIVE_PROJECT]: (state, action) => ({
     ...state,
     activeProject: action.payload
+  }),
+  [SET_PROJECT_DEFAULT_ISSUE]: (state, action) => ({
+    ...state,
+    projectDefaultIssues: {
+      ...state.projectDefaultIssues,
+      [action.meta.id]: action.payload
+    }
   })
 };
 
@@ -108,3 +113,12 @@ export const getProjectActivities = (state, id) =>
  * @returns {Number} ID of the currently active project
  */
 export const getActiveProject = state => state.activeProject;
+
+/**
+ * Get a default issue if it has been set
+ * @param {Object} state Scoped state
+ * @param {id} id The id of the project
+ * @returns {Number?} An issue ID
+ */
+export const getProjectDefaultIssue = (state, id) =>
+  state.projectDefaultIssues[id];
