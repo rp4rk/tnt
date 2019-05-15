@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Select } from 'antd';
+import { Select, Icon } from 'antd';
 import { connect } from 'react-redux';
 
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
@@ -30,6 +30,7 @@ const IssuePrompt = ({
   autoFocus
 }) => {
   const [issueSubject, setIssueSubject] = useState(null);
+  const [initiallyLoaded, setInitialLoad] = useState(false);
   const [url, setUrl] = useState(null);
   const [params, setParams] = useState(null);
 
@@ -48,37 +49,40 @@ const IssuePrompt = ({
   }, [projectId, issueSubject, host]);
 
   // Fetch our data
-  const { data, loading } = useFetch(url, params);
+  const { data } = useFetch(url, params);
 
   // Get issues safely
   const issues = get(['issues'], data);
+
+  // Set initially loaded
+  if (issues) {
+    !initiallyLoaded && setInitialLoad(true);
+  }
 
   // Get the initial issue
   const initialIssue = issues && issues.find(({ id }) => +id === +initialValue);
 
   return (
-    !loading && (
-      <>
-        <Select
-          autoFocus={autoFocus}
-          showSearch
-          filterOption={false}
-          style={{ width: '100%' }}
-          placeholder="Find an issue..."
-          defaultActiveFirstOption={false}
-          defaultValue={initialIssue && initialIssue.subject}
-          onSearch={debounce(value => setIssueSubject(value), 350)}
-          onChange={onChange}
-        >
-          {issues &&
-            issues.map(issue => (
-              <Select.Option key={issue.id} value={issue.id}>
-                {issue.subject}
-              </Select.Option>
-            ))}
-        </Select>
-      </>
-    )
+    (!initiallyLoaded && (
+      <Select
+        autoFocus={autoFocus}
+        showSearch
+        filterOption={false}
+        style={{ width: '100%' }}
+        placeholder="Find an issue..."
+        defaultActiveFirstOption={false}
+        defaultValue={initialIssue && initialIssue.subject}
+        onSearch={debounce(value => setIssueSubject(value), 350)}
+        onChange={onChange}
+      >
+        {issues &&
+          issues.map(issue => (
+            <Select.Option key={issue.id} value={issue.id}>
+              {issue.subject}
+            </Select.Option>
+          ))}
+      </Select>
+    )) || <Icon type="loading" />
   );
 };
 
