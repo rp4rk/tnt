@@ -63,7 +63,7 @@ const IssuePrompt = ({
   const initialIssue = issues && issues.find(({ id }) => +id === +initialValue);
 
   return (
-    (!initiallyLoaded && (
+    (initiallyLoaded && (
       <Select
         autoFocus={autoFocus}
         showSearch
