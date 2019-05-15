@@ -69,6 +69,7 @@ const PreferenceTab = ({
         onCancel={() => toggleIssuePrompt(false)}
       >
         <IssuePrompt
+          autoFocus
           projectId={projectId}
           initialValue={projectDefaultIssue}
           onChange={val => {

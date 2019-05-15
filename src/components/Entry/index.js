@@ -6,11 +6,13 @@ import { getProjectActivities } from 'selectors/projects';
 import { containsString } from 'util/string';
 import DateRangePicker from 'components/DateRangePicker';
 
-import { StyledCard, GridContainer, ActionsContainer } from './styled';
+import IssuePrompt from 'components/IssuePrompt';
 import { updateTimeEntry } from 'actions/entries';
-import { getEntryProperty, entrySubmissionDisabled } from 'selectors/entries';
 import { createPendingEntries } from 'actions/entryposts';
+import { StyledCard, GridContainer, ActionsContainer } from './styled';
+import { getEntryProperty, entrySubmissionDisabled } from 'selectors/entries';
 import { entryPostsComplete, entryPostsLoading } from 'selectors/entryposts';
+import { getProjectDefaultIssue } from 'selectors/projects';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -21,7 +23,8 @@ const mapStateToProps = (state, { projectId, entryId }) => ({
   comments: getEntryProperty(state, projectId, entryId, 'comments'),
   disableSubmit: entrySubmissionDisabled(state, projectId, entryId),
   complete: entryPostsComplete(state, projectId, entryId),
-  loading: entryPostsLoading(state, projectId, entryId)
+  loading: entryPostsLoading(state, projectId, entryId),
+  projectDefaultIssue: getProjectDefaultIssue(state, projectId)
 });
 
 const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
@@ -31,14 +34,18 @@ const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
     dispatch(updateTimeEntry(projectId, entryId, 'hours', value)),
   setComments: e =>
     dispatch(updateTimeEntry(projectId, entryId, 'comments', e.target.value)),
+  setIssue: value =>
+    dispatch(updateTimeEntry(projectId, entryId, 'issueId', value)),
   createPendingEntries: () => dispatch(createPendingEntries(projectId, entryId))
 });
 
 const Entry = ({
   activities,
+  projectDefaultIssue,
   createPendingEntries,
   setHours,
   setComments,
+  setIssue,
   setActivityId,
   hours,
   comments,
@@ -71,7 +78,14 @@ const Entry = ({
         </Select>
 
         <Text>Description</Text>
-        <Input onChange={setComments} value={comments} />
+        <Input required onChange={setComments} value={comments} />
+
+        <Text>Issue</Text>
+        <IssuePrompt
+          projectId={projectId}
+          onChange={setIssue}
+          initialValue={projectDefaultIssue}
+        />
 
         <Text>Hours</Text>
         <InputNumber onChange={setHours} value={hours} />

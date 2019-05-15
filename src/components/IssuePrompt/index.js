@@ -26,7 +26,8 @@ const IssuePrompt = ({
   host,
   redmineKey,
   onChange,
-  initialValue
+  initialValue,
+  autoFocus
 }) => {
   const [issueSubject, setIssueSubject] = useState(null);
   const [url, setUrl] = useState(null);
@@ -59,7 +60,7 @@ const IssuePrompt = ({
     !loading && (
       <>
         <Select
-          autoFocus
+          autoFocus={autoFocus}
           showSearch
           filterOption={false}
           style={{ width: '100%' }}
