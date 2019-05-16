@@ -25,7 +25,13 @@ const Tutorial = ({ steps, setViewed, viewed }) => {
       <ButtonPortal>
         <Tooltip title="View Tutorial" placement="left">
           <Button
-            style={{ position: 'fixed', bottom: 16, right: 16 }}
+            style={{
+              position: 'fixed',
+              bottom: 16,
+              right: 16,
+              zIndex: 1,
+              boxShadow: '0 0 10px 3px rgba(0,0,0, 0.15)'
+            }}
             type="primary"
             shape="circle"
             icon="question"

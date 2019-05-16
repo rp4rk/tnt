@@ -1,6 +1,7 @@
 import React from 'react';
-import Tutorial from 'components/Tutorial';
 import { Typography } from 'antd';
+
+import Tutorial from 'components/Tutorial';
 import { TUTORIALS } from 'constants/tutorials';
 
 const { Title } = Typography;

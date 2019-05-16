@@ -7,6 +7,7 @@ import { getActiveProjects, getActiveProject } from 'selectors/projects';
 import PreferenceTab from './PreferenceTab';
 import Entry from 'components/Entry';
 import { getEntriesForProject } from 'selectors/entries';
+import TimeEntryTutorial from 'components/EntryTutorial';
 
 const { TabPane } = Tabs;
 
@@ -33,20 +34,23 @@ function TimeEntry({
   }, [getProjects]);
 
   return (
-    <Tabs
-      tabPosition="left"
-      onChange={setActiveProject}
-      activeKey={String(activeProject)}
-    >
-      {projects.map(project => (
-        <TabPane key={project.id} tab={<PreferenceTab id={project.id} />}>
-          {entries &&
-            entries.map((entry, idx) => (
-              <Entry key={idx} projectId={project.id} entryId={idx} />
-            ))}
-        </TabPane>
-      ))}
-    </Tabs>
+    <>
+      {projects && <TimeEntryTutorial />}
+      <Tabs
+        tabPosition="left"
+        onChange={setActiveProject}
+        activeKey={String(activeProject)}
+      >
+        {projects.map(project => (
+          <TabPane key={project.id} tab={<PreferenceTab id={project.id} />}>
+            {entries &&
+              entries.map((entry, idx) => (
+                <Entry key={idx} projectId={project.id} entryId={idx} />
+              ))}
+          </TabPane>
+        ))}
+      </Tabs>
+    </>
   );
 }
 
