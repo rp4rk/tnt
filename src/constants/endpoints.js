@@ -13,3 +13,13 @@ export const getProjectEndpoint = host =>
 
 export const getTimeEntryEndpoint = host =>
   `${corsProxy}${devHost || host}/time_entries.json`;
+
+export const getIssuesEndpoint = (host, params = {}) => {
+  const url = new URL(`${corsProxy}${devHost || host}/issues.json`);
+
+  Object.entries(params).forEach(([key, value]) =>
+    url.searchParams.append(key, value)
+  );
+
+  return url;
+};
