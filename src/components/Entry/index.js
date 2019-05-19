@@ -101,25 +101,16 @@ const Entry = ({
           value={hours}
         />
       </GridContainer>
-      <ActionsContainer complete={complete}>
-        {!complete && !loading && (
-          <Button
-            data-tour="activity-submit"
-            disabled={disableSubmit}
-            onClick={createPendingEntries}
-          >
-            <Icon type="plus-circle" theme="filled" />
-            Submit
-          </Button>
-        )}
-        {loading && <Icon style={{ color: 'black' }} type="loading" />}
-        {complete && (
+      {complete && (
+        <ActionsContainer complete={complete}>
+          {loading && <Icon style={{ color: 'black' }} type="loading" />}
+
           <>
             <span>Entries submitted successfully!</span>
             <Icon type="check-circle" />
           </>
-        )}
-      </ActionsContainer>
+        </ActionsContainer>
+      )}
     </StyledCard>
   );
 };

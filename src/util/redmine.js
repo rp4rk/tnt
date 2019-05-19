@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { ENTRY_PROPERTY } from 'constants/entryProperties';
 
 /**
  * Determines if the provided URL is secure. (HTTPS)
@@ -30,3 +31,17 @@ export const validRedmineDescription = val => {
 };
 
 export const validRedmineHours = num => num > 0;
+
+export const isValidRedmineEntry = entry => {
+  const description = entry[ENTRY_PROPERTY.DESCRIPTION];
+  const hours = entry[ENTRY_PROPERTY.HOURS];
+  const activityId = entry[ENTRY_PROPERTY.ACTIVITY_ID];
+  const fromDate = entry[ENTRY_PROPERTY.FROM_DATE];
+
+  const validDescription = validRedmineDescription(description);
+  const validHours = validRedmineHours(hours);
+  const validActivityId = !!activityId;
+  const validDate = !!fromDate;
+
+  return validDescription && validHours && validActivityId && validDate;
+};

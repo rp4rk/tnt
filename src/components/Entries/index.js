@@ -8,6 +8,7 @@ import { createTimeEntry } from 'actions/entries';
 import { getActiveProject } from 'selectors/projects';
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 import { ActionHolder } from './styled';
+import SubmitAllButton from './SubmitAllButton';
 
 const { Title, Text } = Typography;
 
@@ -24,6 +25,7 @@ const mapDispatchToProps = dispatch => ({
 
 const Entries = ({
   createNewTimeEntry,
+  submitAllEntries,
   activeProjectId,
   redmineAddress,
   redmineKey
@@ -51,6 +53,7 @@ const Entries = ({
       <Divider />
       <TimeEntry />
       <ActionHolder>
+        <SubmitAllButton projectId={activeProjectId} />
         <Button
           data-tour="new-entry-button"
           type="primary"

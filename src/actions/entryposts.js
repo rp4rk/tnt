@@ -3,7 +3,11 @@ import {
   CREATE_PENDING_ENTRY_SUCCESS,
   CREATE_PENDING_ENTRY_FAILURE
 } from 'constants/actionTypes';
-import { getEntryForProject } from 'selectors/entries';
+import {
+  getEntryForProject,
+  getEntriesForProject,
+  entrySubmissionDisabled
+} from 'selectors/entries';
 import { dateRange } from 'util/date';
 import { isWeekend } from 'date-fns';
 import { getTimeEntryEndpoint } from 'constants/endpoints';
@@ -102,5 +106,18 @@ export const createPendingEntries = (projectId, entryId) => (
     } catch (error) {
       dispatch(createPendingEntriesFailure(projectId, entryId, date, error));
     }
+  });
+};
+
+export const createAllPendingEntries = projectId => (dispatch, getState) => {
+  const state = getState();
+  const entries = getEntriesForProject(state, projectId);
+
+  entries.forEach((entry, entryId) => {
+    if (entrySubmissionDisabled(state, projectId, entryId)) {
+      return;
+    }
+
+    dispatch(createPendingEntries(projectId, entryId));
   });
 };
