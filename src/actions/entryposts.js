@@ -67,7 +67,7 @@ export const createPendingEntries = (projectId, entryId) => (
   const host = getRedmineAddress(state);
   const key = getRedmineKey(state);
   const entry = getEntryForProject(state, projectId, entryId);
-  const { fromDate, toDate, includeWeekends } = entry;
+  const { fromDate, toDate, includeWeekends, issueId } = entry;
 
   if (!fromDate) return;
 
@@ -84,11 +84,12 @@ export const createPendingEntries = (projectId, entryId) => (
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Redmine-Api-key': key
+          'X-Redmine-Api-Key': key
         },
         body: JSON.stringify({
           time_entry: {
             project_id: projectId,
+            issue_id: issueId,
             activity_id: activityId,
             spent_on: redmineDate(date),
             comments,

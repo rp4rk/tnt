@@ -15,3 +15,18 @@ export const set = ([key, ...next], value, obj) => {
 
 export const get = (path = [], obj = {}) =>
   path.reduce((val, key) => (val ? val[key] : undefined), obj);
+
+/**
+ * Builds a state object from localstorage items with the prefix provided
+ * @param {String} prefix The prefix of the key in localstorage
+ * @returns {Object}
+ */
+export const buildStateFromLocalStorage = prefix =>
+  Object.entries(localStorage).reduce((items, [key, value]) => {
+    if (key.indexOf(prefix) === -1) return items;
+
+    const id = key.match(/\d+/g);
+    items[id] = value;
+
+    return items;
+  }, {});

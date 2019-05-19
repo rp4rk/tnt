@@ -52,6 +52,7 @@ const Entries = ({
       <TimeEntry />
       <ActionHolder>
         <Button
+          data-tour="new-entry-button"
           type="primary"
           onClick={() => createNewTimeEntry(activeProjectId)}
         >

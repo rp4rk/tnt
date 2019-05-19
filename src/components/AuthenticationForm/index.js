@@ -50,6 +50,7 @@ function UnconnectedAuthenticationForm({
         help={addressValid || addressPristine ? null : 'HTTPS only'}
       >
         <Input
+          data-tour="redmine-address"
           prefix={<Icon type="global" />}
           id="warning"
           placeholder="Redmine Address"
@@ -67,6 +68,7 @@ function UnconnectedAuthenticationForm({
         }
       >
         <Input
+          data-tour="redmine-key"
           prefix={<Icon type="key" />}
           placeholder="API Key"
           defaultValue={redmineApiKey}
@@ -80,6 +82,7 @@ function UnconnectedAuthenticationForm({
         trigger="hover"
       >
         <Button
+          data-tour="redmine-details-save"
           disabled={!apiKeyValid || !addressValid}
           type="primary"
           htmlType="submit"

@@ -62,3 +62,12 @@ export const getProjectActivities = (state, id) =>
  */
 export const getActiveProject = state =>
   FromProjects.getActiveProject(state[STATE_KEY]);
+
+/**
+ * Get a default issue if it has been set
+ * @param {Object} state Scoped state
+ * @param {id} id The id of the project
+ * @returns {Number?} An issue ID
+ */
+export const getProjectDefaultIssue = (state, id) =>
+  FromProjects.getProjectDefaultIssue(state[STATE_KEY], id);
