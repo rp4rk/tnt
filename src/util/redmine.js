@@ -29,4 +29,4 @@ export const validRedmineDescription = val => {
   return val.length > 6 && val.length <= 255;
 };
 
-export const validRedmineHours = num => num > 0;
+export const validRedmineHours = num => num || num === 0;
