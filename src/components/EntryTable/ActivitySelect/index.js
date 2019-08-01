@@ -3,7 +3,7 @@ import { Select } from 'antd';
 
 const Option = Select.Option;
 
-const Activity = ({ value, onChange }) => {
+const Activity = ({ activities, value, onChange }) => {
   return (
     <Select
       onChange={onChange}
@@ -16,9 +16,7 @@ const Activity = ({ value, onChange }) => {
         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
     >
-      <Option value="development">Development</Option>
-      <Option value="meeting">Meeting</Option>
-      <Option value="testing">Testing</Option>
+      {activities.map(activity => <Option key={activity.id} value={activity.id}>{activity.name}</Option>)}
     </Select>
   );
 };

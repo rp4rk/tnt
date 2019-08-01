@@ -1,119 +1,101 @@
 import React, { useState } from 'react';
-import { Input, Select, Table } from 'antd';
-import moment from 'moment';
+import { Button, Table } from 'antd';
+import { format, getISOWeek } from 'date-fns';
+import { connect } from 'react-redux';
 
-import ActivitySelect from './ActivitySelect';
-import CommentInput from './CommentInput';
+import { getProjectActivities, getActiveProject } from 'selectors/projects';
+import { get } from 'util/object';
+
 import Header from './Header';
-import HourInput from './HourInput';
 import Footer from './Footer';
+import Modal from './Modal';
+import { getColumns, getDateRange } from './helpers';
 
-const EntryTable = () => {
-  const [date, setDate] = useState(moment());
-  const activeDate = date
-    .clone()
-    .startOf('week')
-    .format('DD/MM/YYYY');
-  const [tableData, setTableData] = useState({ [activeDate]: [{}] });
+const mapStateToProps = state => ({
+  activeProject: getActiveProject(state),
+  activities: getProjectActivities(state, getActiveProject(state)),
+})
 
-  const handleDataChange = (index, key, value) => {
-    let newData = tableData[activeDate] ? [...tableData[activeDate]] : [{}];
-    newData[index][key] = value;
-    const rowsWithData = newData.filter(row => {
-      return Object.values(row).filter(value => !!value).length > 0;
-    });
-    if (rowsWithData.length === newData.length) {
-      newData.push({});
-    } else {
-      newData = [...rowsWithData, {}];
+const EntryTable = ({ getProjects, projects, activeProject, activities}) => {
+  const [ allEntries, setAllEntries ] = useState({});
+  const [ allComments, setAllComments ] = useState({});
+  const [ allActivities, setAllActivites ] = useState({});
+  const [ selectedDate, setDate ] = useState(new Date());
+  const [ showModal, setShowModal ] = useState(false);
+
+  const weekNumber = getISOWeek(selectedDate);
+
+  const tableData = [];
+  get([activeProject, weekNumber], allComments, []).forEach((comment, i) => {
+    tableData[i] = tableData[i] ? { ...tableData[i], comment } : { comment };
+  })
+  get([activeProject, weekNumber], allActivities, []).forEach((activity, i) => {
+    tableData[i] = tableData[i] ? { ...tableData[i], activity } : { activity };
+  })
+  getDateRange(selectedDate).forEach(day => {
+    const formattedDate = format(day, 'YYYY-MM-DD');
+    get([activeProject, formattedDate], allEntries, []).forEach((entry, i) => {
+      tableData[i] = tableData[i] ? { ...tableData[i], [formattedDate]: entry } : { [formattedDate]: entry };
+    })
+  })
+
+  const onChange = (key) => (value, record, index) => {
+    if(key === 'activity') {
+      const toUpdate = get([activeProject, weekNumber], allActivities, [])
+      toUpdate[index] = value;
+      return setAllActivites({
+        ...allActivities,
+        [activeProject]: {
+          ...allActivities[activeProject],
+          [weekNumber]: toUpdate,
+        }
+      }) 
+    }
+    if (key === 'comment') {
+      const toUpdate = get([activeProject, weekNumber], allComments, [])
+      toUpdate[index] = value;
+      return setAllComments({
+        ...allComments,
+        [activeProject]: {
+          ...allComments[activeProject],
+          [weekNumber]: toUpdate,
+        }
+      }) 
     }
 
-    setTableData({
-      ...tableData,
-      [activeDate]: newData
-    });
-  };
-
-  const getDateRange = () => {
-    const start = date.clone().startOf('week');
-    const end = date.clone().endOf('week');
-    const range = [];
-    while (start.isSameOrBefore(end)) {
-      range.push(start.clone());
-      start.add(1, 'days');
-    }
-    return range;
-  };
-
-  const totals = (tableData[activeDate] || [{}]).reduce((acc, row) => {
-    Object.entries(row).forEach(([key, value]) => {
-      if (!value || ['activity', 'comment'].includes(key)) {
-        return;
+    const toUpdate = get([activeProject, key], allEntries, []);
+    toUpdate[index] = value;
+    return setAllEntries({
+      ...allEntries,
+      [activeProject]: {
+        ...allEntries[activeProject],
+        [key]: toUpdate,
       }
-      acc[key]
-        ? (acc[key] += parseFloat(value))
-        : (acc[key] = parseFloat(value));
-      acc.total
-        ? (acc.total += parseFloat(value))
-        : (acc.total = parseFloat(value));
-    });
-    return acc;
-  }, {});
+    })
+  }
+  
+  const includeWeekends = false;
 
-  const columns = [
-    {
-      title: 'Activity',
-      dataIndex: 'activity',
-      key: 'activity',
-      width: 150,
-      footerValue: 'Total',
-      render: (value, row, index) => (
-        <ActivitySelect
-          value={value}
-          onChange={newValue => handleDataChange(index, 'activity', newValue)}
-        />
-      )
-    },
-    ...getDateRange().map(day => ({
-      title: day.format('ddd'),
-      key: day.format('DD/MM/YYYY'),
-      dataIndex: day.format('DD/MM/YYYY'),
-      footerValue: totals[day.format('DD/MM/YYYY')],
-      render: (value, row, index) => (
-        <HourInput
-          value={value}
-          onChange={e =>
-            handleDataChange(index, day.format('DD/MM/YYYY'), e.target.value)
-          }
-        />
-      )
-    })),
-    {
-      title: 'Comment',
-      key: 'comment',
-      dataIndex: 'comment',
-      width: 250,
-      footerValue: totals.total,
-      render: (value, row, index) => (
-        <CommentInput
-          value={value}
-          onChange={e => handleDataChange(index, 'comment', e.target.value)}
-        />
-      )
-    }
-  ];
-
-  return (
+  return(
     <>
-      <Header onDateChange={setDate} value={date} />
+      <Header selectedDate={selectedDate} onDateChange={setDate} />
       <Table
+        columns={getColumns(includeWeekends, selectedDate, onChange, activities)}
+        dataSource={[...tableData, { }]}
         pagination={false}
-        columns={columns}
-        dataSource={tableData[activeDate] || [{}]}
-        footer={() => <Footer columns={columns} />}
+        style={{ marginBottom: 15 }}
+        footer={Footer}
+        size='small'
+      />
+      <Button type='primary' onClick={() => setShowModal(true)}>Submit Entries</Button>
+      <Modal 
+        visible={showModal}
+        entries={allEntries} 
+        comments={allComments} 
+        activities={allActivities} 
       />
     </>
-  );
-};
+  )
+}
 
-export default EntryTable;
+export default connect(mapStateToProps)(EntryTable);

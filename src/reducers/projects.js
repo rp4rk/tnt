@@ -87,7 +87,7 @@ export const getProjectsLoading = state => state.loading;
  * @param {Number} id A project id
  * @returns {Object} A project
  */
-export const getProjectById = (state, id) => state.projects[id];
+export const getProjectById = (state, id) => state.projects[id] || {};
 
 /**
  * Get a project name by it's id
@@ -105,7 +105,7 @@ export const getProjectName = (state, id) =>
  * @returns {Object[]} A list of activities for this project
  */
 export const getProjectActivities = (state, id) =>
-  getProjectById(state, id).time_entry_activities;
+  getProjectById(state, id).time_entry_activities || [];
 
 /**
  * Get a project name by it's id
