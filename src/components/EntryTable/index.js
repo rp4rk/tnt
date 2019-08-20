@@ -93,6 +93,7 @@ const EntryTable = ({ getProjects, projects, activeProject, activities}) => {
         entries={allEntries} 
         comments={allComments} 
         activities={allActivities} 
+        setShowModal={setShowModal}
       />
     </>
   )
