@@ -48,7 +48,7 @@ const DateRangePicker = ({
   };
 
   return (
-    <div>
+    <div data-tour="tour-date-entry">
       <Controls>
         <Checkbox
           checked={showRangePicker}

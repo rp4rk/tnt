@@ -63,6 +63,7 @@ const Entry = ({
 
         <Text>Activity</Text>
         <Select
+          data-tour="activity-selector"
           showSearch
           onChange={setActivityId}
           placeholder="Select an activity"
@@ -78,21 +79,35 @@ const Entry = ({
         </Select>
 
         <Text>Description</Text>
-        <Input required onChange={setComments} value={comments} />
+        <Input
+          data-tour="activity-description"
+          required
+          onChange={setComments}
+          value={comments}
+        />
 
         <Text>Issue</Text>
         <IssuePrompt
+          tourLabel="activity-issue"
           projectId={projectId}
           onChange={setIssue}
           initialValue={projectDefaultIssue}
         />
 
         <Text>Hours</Text>
-        <InputNumber onChange={setHours} value={hours} />
+        <InputNumber
+          data-tour="activity-hours"
+          onChange={setHours}
+          value={hours}
+        />
       </GridContainer>
       <ActionsContainer complete={complete}>
         {!complete && !loading && (
-          <Button disabled={disableSubmit} onClick={createPendingEntries}>
+          <Button
+            data-tour="activity-submit"
+            disabled={disableSubmit}
+            onClick={createPendingEntries}
+          >
             <Icon type="plus-circle" theme="filled" />
             Submit
           </Button>

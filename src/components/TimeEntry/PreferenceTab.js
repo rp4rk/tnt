@@ -102,7 +102,11 @@ const PreferenceTab = ({
         )) || (
           <>
             <Dropdown overlay={menu}>
-              <TabButton shape="circle-outline" icon="setting" />
+              <TabButton
+                shape="circle-outline"
+                icon="setting"
+                data-tour="project-settings"
+              />
             </Dropdown>
             <OverflowSpan>{projectName}</OverflowSpan>
           </>

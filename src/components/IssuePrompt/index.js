@@ -27,7 +27,8 @@ const IssuePrompt = ({
   redmineKey,
   onChange,
   initialValue,
-  autoFocus
+  autoFocus,
+  tourLabel
 }) => {
   const [issueSubject, setIssueSubject] = useState(null);
   const [initiallyLoaded, setInitialLoad] = useState(false);
@@ -65,6 +66,7 @@ const IssuePrompt = ({
   return (
     (initiallyLoaded && (
       <Select
+        data-tour={tourLabel}
         autoFocus={autoFocus}
         showSearch
         filterOption={false}
