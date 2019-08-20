@@ -15,7 +15,7 @@ export const set = ([key, ...next], value, obj) => {
 
 export const get = (path = [], obj = {}, defaultValue) =>
   path.reduce((val, key) => {
-    return val && val[key] ? val[key] : defaultValue
+    return val && val[key] ? val[key] : defaultValue;
   }, obj);
 
 /**

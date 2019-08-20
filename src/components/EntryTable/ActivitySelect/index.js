@@ -16,7 +16,11 @@ const Activity = ({ activities, value, onChange }) => {
         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
     >
-      {activities.map(activity => <Option key={activity.id} value={activity.id}>{activity.name}</Option>)}
+      {activities.map(activity => (
+        <Option key={activity.id} value={activity.id}>
+          {activity.name}
+        </Option>
+      ))}
     </Select>
   );
 };
