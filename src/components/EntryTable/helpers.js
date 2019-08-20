@@ -80,11 +80,21 @@ export const getColumns = (
   ];
 };
 
-export const getSummary = (entries, comments, activities) => {
+export const getSummary = (
+  entries,
+  comments,
+  activities,
+  projectActivities,
+  activeProjects
+) => {
   let summary = [];
   let components = [];
   Object.entries(entries).forEach(([project, entry]) => {
-    components.push(<div>Project {project}</div>);
+    components.push(
+      <h3 style={{ marginTop: 20 }}>
+        {activeProjects.find(p => p.id === +project).name}
+      </h3>
+    );
     summary = [
       ...summary,
       ...Object.entries(entry).reduce((acc, [date, hours]) => {
@@ -93,12 +103,19 @@ export const getSummary = (entries, comments, activities) => {
         const weekComments = get([project, week], comments, []);
         const weekActivities = get([project, week], activities, []);
 
+        components.push(
+          <div style={{ fontWeight: 'bold', marginTop: 10 }}>
+            {format(date, 'Do MMMM')}
+          </div>
+        );
+
         hours.forEach((hour, i) => {
+          const activity = projectActivities.find(
+            pa => pa.id === weekActivities[i]
+          );
+          const activityName = activity ? activity.name : '';
           components.push(
-            <div>
-              {date} - {hours} - {weekActivities[i]} - {weekComments[i]} -{' '}
-              {project}
-            </div>
+            <div>{`${activityName} - ${hour} hours - ${weekComments[i]}`}</div>
           );
 
           entries.push({

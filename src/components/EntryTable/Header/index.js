@@ -5,7 +5,7 @@ import { format, startOfISOWeek, endOfISOWeek } from 'date-fns';
 import { DatePicker, Select } from 'antd';
 
 import { fetchProjects, setActiveProject } from 'actions/projects';
-import { getActiveProjects, getActiveProject } from 'selectors/projects';
+import { getActiveProject } from 'selectors/projects';
 
 const { Option } = Select;
 
@@ -15,7 +15,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  projects: getActiveProjects(state),
   activeProject: getActiveProject(state)
 });
 
@@ -23,7 +22,7 @@ const Header = ({
   selectedDate,
   onDateChange,
   getProjects,
-  projects,
+  activeProjects,
   setActiveProject,
   activeProject
 }) => {
@@ -49,17 +48,17 @@ const Header = ({
           value={activeProject}
           onChange={setActiveProject}
         >
-          {projects.map(({ id, name }) => (
+          {activeProjects.map(({ id, name }) => (
             <Option key={id} value={id}>
               {name}
             </Option>
           ))}
         </Select>
-        <Select placeholder="Issue" style={{ width: 150, marginLeft: 15 }}>
+        {/* <Select placeholder="Issue" style={{ width: 150, marginLeft: 15 }}>
           <Option value="issue1">Issue 1</Option>
           <Option value="issue2">Issue 2</Option>
           <Option value="issue3">Issue 3</Option>
-        </Select>
+        </Select> */}
       </div>
       <h3>{`${startOf} - ${endOf}`}</h3>
     </>

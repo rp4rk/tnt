@@ -1,32 +1,37 @@
-import React from 'react';
-import { Modal } from 'antd';
+import React, { useState } from 'react';
+import { Modal, Spin } from 'antd';
 
 import { store } from '../../../store';
 import { getSummary } from '../helpers';
 import { getTimeEntryEndpoint } from 'constants/endpoints';
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 
-const submitEntries = entries => {
+const Spinner = () => (
+  <div
+    style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+  >
+    <Spin size="large" />
+  </div>
+);
+
+const submitEntries = async entries => {
   const state = store.getState();
   const host = getRedmineAddress(state);
   const key = getRedmineKey(state);
 
-  entries.forEach((entry, i) => {
-    setTimeout(
-      () =>
-        fetch(getTimeEntryEndpoint(host), {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Redmine-Api-Key': key
-          },
-          body: JSON.stringify({
-            time_entry: { ...entry }
-          })
-        }),
-      500 * i
-    );
-  });
+  for (const entry of entries) {
+    await fetch(getTimeEntryEndpoint(host), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Redmine-Api-Key': key
+      },
+      body: JSON.stringify({
+        time_entry: { ...entry }
+      })
+    });
+  }
+  return true;
 };
 
 const SummaryModal = ({
@@ -34,19 +39,39 @@ const SummaryModal = ({
   comments,
   activities,
   visible,
-  setShowModal
+  setShowModal,
+  onEntriesSubmitted,
+  projectActivities,
+  activeProjects
 }) => {
-  const [summary, components] = getSummary(entries, comments, activities);
+  const [loading, setLoading] = useState(false);
+  const [summary, components] = getSummary(
+    entries,
+    comments,
+    activities,
+    projectActivities,
+    activeProjects
+  );
+
+  const handleOk = async () => {
+    setLoading(true);
+    await submitEntries(summary);
+    setLoading(false);
+    onEntriesSubmitted();
+  };
 
   return (
     <Modal
       title="Entries Summary"
       okText="Submit"
       visible={visible}
-      onOk={() => submitEntries(summary)}
+      onOk={handleOk}
       onCancel={() => setShowModal(false)}
+      okButtonProps={{ disabled: loading }}
+      cancelButtonProps={{ disabled: loading }}
+      closable={false}
     >
-      {components}
+      {loading ? <Spinner /> : components}
     </Modal>
   );
 };

@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Table } from 'antd';
+import { Alert, Button, Table } from 'antd';
 import { format, getISOWeek } from 'date-fns';
 import { connect } from 'react-redux';
 
-import { getProjectActivities, getActiveProject } from 'selectors/projects';
+import {
+  getProjectActivities,
+  getActiveProject,
+  getActiveProjects
+} from 'selectors/projects';
 import { get } from 'util/object';
 
 import Header from './Header';
@@ -13,10 +17,17 @@ import { getColumns, getDateRange } from './helpers';
 
 const mapStateToProps = state => ({
   activeProject: getActiveProject(state),
-  activities: getProjectActivities(state, getActiveProject(state))
+  activeProjects: getActiveProjects(state),
+  projectActivities: getProjectActivities(state, getActiveProject(state))
 });
 
-const EntryTable = ({ getProjects, projects, activeProject, activities }) => {
+const EntryTable = ({
+  getProjects,
+  projects,
+  activeProject,
+  activeProjects,
+  projectActivities
+}) => {
   const [allEntries, setAllEntries] = useState({});
   const [allComments, setAllComments] = useState({});
   const [allActivities, setAllActivites] = useState({});
@@ -76,17 +87,33 @@ const EntryTable = ({ getProjects, projects, activeProject, activities }) => {
     });
   };
 
+  const clearAllEntries = () => {
+    setAllEntries({});
+    setAllComments({});
+    setAllActivites({});
+    setShowModal(false);
+  };
+
   const includeWeekends = false;
 
   return (
     <>
-      <Header selectedDate={selectedDate} onDateChange={setDate} />
+      <Alert
+        style={{ marginBottom: 15 }}
+        type="warning"
+        message="This feature is experimental, use with caution"
+      />
+      <Header
+        selectedDate={selectedDate}
+        onDateChange={setDate}
+        activeProjects={activeProjects}
+      />
       <Table
         columns={getColumns(
           includeWeekends,
           selectedDate,
           onChange,
-          activities
+          projectActivities
         )}
         dataSource={[...tableData, {}]}
         pagination={false}
@@ -102,7 +129,10 @@ const EntryTable = ({ getProjects, projects, activeProject, activities }) => {
         entries={allEntries}
         comments={allComments}
         activities={allActivities}
+        projectActivities={projectActivities}
+        activeProjects={activeProjects}
         setShowModal={setShowModal}
+        onEntriesSubmitted={clearAllEntries}
       />
     </>
   );
