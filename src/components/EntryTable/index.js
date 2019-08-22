@@ -118,7 +118,7 @@ const EntryTable = ({
         dataSource={[...tableData, {}]}
         pagination={false}
         style={{ marginBottom: 15 }}
-        footer={Footer}
+        footer={Footer(selectedDate)}
         size="small"
       />
       <Button type="primary" onClick={() => setShowModal(true)}>
