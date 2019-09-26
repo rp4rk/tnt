@@ -8,6 +8,7 @@ import { createTimeEntry } from 'actions/entries';
 import { getActiveProject } from 'selectors/projects';
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 import { ActionHolder } from './styled';
+import EntryRecapList from 'components/EntryRecapList';
 
 const { Title, Text } = Typography;
 
@@ -48,6 +49,8 @@ const Entries = ({
         Draft your time entries here, don't worry about making mistakes they
         won't save until you say so!
       </Text>
+      <Divider />
+      <EntryRecapList />
       <Divider />
       <TimeEntry />
       <ActionHolder>

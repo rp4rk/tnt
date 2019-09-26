@@ -23,3 +23,6 @@ export const getIssuesEndpoint = (host, params = {}) => {
 
   return url;
 };
+
+export const getProjectIssues = (host, projectId) =>
+  `${corsProxy}${devHost || host}/time_entries/${projectId}.json`;

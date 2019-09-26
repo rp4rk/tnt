@@ -1,4 +1,4 @@
-import { parse, eachDay } from 'date-fns';
+import { parse, eachDayOfInterval } from 'date-fns';
 
 /**
  * Generates a range of days between the two provided dates
@@ -9,5 +9,8 @@ import { parse, eachDay } from 'date-fns';
 export const dateRange = (a, b) => {
   if (!b) return [parse(a)];
 
-  return eachDay(a, b);
+  return eachDayOfInterval({
+    start: a,
+    end: b
+  });
 };
