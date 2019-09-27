@@ -24,8 +24,10 @@ function EntryRecapSummary({
 
   useEffect(() => {
     const entries = fetch(
-      getProjectIssues(redmineAddress, currentProject) +
-        `?${qs.stringify({ spent_on: format(date, 'yyyy-MM-dd') })}`,
+      getProjectIssues(redmineAddress, {
+        projectId: currentProject,
+        spent_on: format(date, 'yyyy-MM-dd')
+      }),
       {
         method: 'GET',
         headers: {

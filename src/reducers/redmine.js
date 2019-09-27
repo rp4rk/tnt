@@ -1,8 +1,16 @@
-import { SET_REDMINE_ADDRESS, SET_REDMINE_KEY } from 'constants/actionTypes';
+import {
+  SET_REDMINE_ADDRESS,
+  SET_REDMINE_KEY,
+  GET_USER_START,
+  GET_USER_FAILURE,
+  GET_USER_SUCCESS
+} from 'constants/actionTypes';
 
 const initialState = {
   key: localStorage.getItem('redmineKey') || '',
-  address: localStorage.getItem('redmineAddress') || ''
+  address: localStorage.getItem('redmineAddress') || '',
+  userId: localStorage.getItem('userId') || null,
+  loading: false
 };
 
 const REDUCERS = {
@@ -13,6 +21,22 @@ const REDUCERS = {
   [SET_REDMINE_ADDRESS]: (state, action) => ({
     ...state,
     address: action.payload
+  }),
+  [GET_USER_START]: (state, action) => ({
+    ...state,
+    loading: action.payload.loading,
+    error: action.error
+  }),
+  [GET_USER_SUCCESS]: (state, action) => ({
+    ...state,
+    loading: action.payload.loading,
+    userId: action.payload.userId
+  }),
+  [GET_USER_FAILURE]: (state, action) => ({
+    ...state,
+    loading: action.payload.loading,
+    userId: null,
+    error: action.error
   })
 };
 
@@ -35,3 +59,10 @@ export const getRedmineKey = state => state.key;
  * @returns {String} The address for redmine
  */
 export const getRedmineAddress = state => state.address;
+
+/**
+ * Get the current user id, used to query for entries
+ * @param {Object} state Scoped state
+ * @returns {String} The currently logged in user
+ */
+export const getRedmineUserId = state => state.address;

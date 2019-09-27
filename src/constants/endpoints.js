@@ -1,3 +1,5 @@
+const qs = require('query-string');
+
 // CORS Proxy is only in use for production
 const corsProxy =
   process.env.NODE_ENV === 'development'
@@ -24,5 +26,14 @@ export const getIssuesEndpoint = (host, params = {}) => {
   return url;
 };
 
-export const getProjectIssues = (host, projectId) =>
-  `${corsProxy}${devHost || host}/time_entries/${projectId}.json`;
+export const getProjectIssues = (host, { projectId, spent_on, user_id }) => {
+  const queryString = qs.stringify({
+    projectId,
+    spent_on,
+    user_id
+  });
+  return;
+};
+
+export const getCurrentUser = host =>
+  new URL(`${corsProxy}${devHost || host}/users/current.json`);
