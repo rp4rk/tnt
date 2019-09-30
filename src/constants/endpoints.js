@@ -32,7 +32,10 @@ export const getProjectIssues = (host, { projectId, spent_on, user_id }) => {
     spent_on,
     user_id
   });
-  return;
+
+  return new URL(
+    `${corsProxy}${devHost || host}/time_entries.json?${queryString || ''}`
+  );
 };
 
 export const getCurrentUser = host =>

@@ -67,7 +67,6 @@ function EntryRecapList() {
       <Button
         shape="circle"
         icon="left"
-        type="primary"
         size="small"
         onClick={() => dispatch({ type: 'GO_BACK' })}
       />
@@ -79,7 +78,6 @@ function EntryRecapList() {
       <Button
         shape="circle"
         icon="right"
-        type="primary"
         size="small"
         onClick={() => dispatch({ type: 'GO_FORWARD' })}
       />

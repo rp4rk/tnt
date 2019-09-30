@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import qs from 'query-string';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
-import { Button, Badge } from 'antd';
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 import { getActiveProject } from 'selectors/projects';
 import { getProjectIssues } from 'constants/endpoints';
+import { RecapSummaryButton } from './styled';
+
+// Sums hours on time_entries array
+const sumHours = (acc, curr) => acc + curr.hours;
 
 const mapStateToProps = state => ({
   redmineKey: getRedmineKey(state),
@@ -22,6 +24,9 @@ function EntryRecapSummary({
   const [entries, setEntries] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * Fetch entry data for the day being recapped
+   */
   useEffect(() => {
     fetch(
       getProjectIssues(redmineAddress, {
@@ -38,7 +43,7 @@ function EntryRecapSummary({
     )
       .then(res => res.json())
       .then(data => {
-        setEntries(data.time_entry);
+        setEntries(data);
         setLoading(false);
       })
       .catch(err => {
@@ -47,12 +52,23 @@ function EntryRecapSummary({
       });
   }, [date, redmineKey, redmineAddress, currentProject]);
 
+  /**
+   * Calculate hours logged for the day being recapped
+   */
+  const hours = ((entries && entries.time_entries) || []).reduce(sumHours, 0);
+
   return (
-    <Badge count="3">
-      <Button onClick={() => console.log(entries)} icon={loading && 'loading'}>
-        {format(date, 'yyyy-MM-dd')}
-      </Button>
-    </Badge>
+    <RecapSummaryButton
+      hoursMet={hours >= 2}
+      onClick={() => console.log(entries)}
+      icon={
+        (loading && 'loading') || hours >= 2
+          ? 'check-circle'
+          : 'exclamation-circle'
+      }
+    >
+      {format(date, 'yyyy-MM-dd')}
+    </RecapSummaryButton>
   );
 }
 
