@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import qs from 'query-string';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
-import { Button } from 'antd';
+import { Button, Badge } from 'antd';
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 import { getActiveProject } from 'selectors/projects';
 import { getProjectIssues } from 'constants/endpoints';
@@ -23,7 +23,7 @@ function EntryRecapSummary({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const entries = fetch(
+    fetch(
       getProjectIssues(redmineAddress, {
         projectId: currentProject,
         spent_on: format(date, 'yyyy-MM-dd')
@@ -46,9 +46,13 @@ function EntryRecapSummary({
         setEntries(null);
       });
   }, [date, redmineKey, redmineAddress, currentProject]);
-  console.log(entries);
+
   return (
-    <Button icon={loading && 'loading'}>{format(date, 'yyyy-MM-dd')}</Button>
+    <Badge count="3">
+      <Button onClick={() => console.log(entries)} icon={loading && 'loading'}>
+        {format(date, 'yyyy-MM-dd')}
+      </Button>
+    </Badge>
   );
 }
 

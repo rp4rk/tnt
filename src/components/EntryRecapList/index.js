@@ -5,17 +5,19 @@ import {
   endOfMonth,
   subMonths,
   eachDayOfInterval,
-  getDay,
+  getDate,
   isWeekend
 } from 'date-fns';
 import { addMonths } from 'date-fns/esm';
 import EntryRecapSummary from 'components/EntryRecapSummary';
+import { Button } from 'antd';
+import { RecapContainer, RecapButtonContainer } from './styled';
 
 const MID_MONTH = 15;
 const initialState = {
   date: new Date(),
-  day: getDay(new Date()),
-  half: getDay(new Date()) <= MID_MONTH ? 0 : 1
+  day: getDate(new Date()),
+  half: getDate(new Date()) <= MID_MONTH ? 0 : 1
 };
 
 const reducer = (state, action) => {
@@ -61,15 +63,27 @@ function EntryRecapList() {
   ];
 
   return (
-    <div>
-      <button onClick={() => dispatch({ type: 'GO_BACK' })}>Subtract</button>
-
-      {dates[state.half].map(date => (
-        <EntryRecapSummary key={date} date={date} />
-      ))}
-
-      <button onClick={() => dispatch({ type: 'GO_FORWARD' })}>Add</button>
-    </div>
+    <RecapContainer>
+      <Button
+        shape="circle"
+        icon="left"
+        type="primary"
+        size="small"
+        onClick={() => dispatch({ type: 'GO_BACK' })}
+      />
+      <RecapButtonContainer>
+        {dates[state.half].map(date => (
+          <EntryRecapSummary key={date} date={date} />
+        ))}
+      </RecapButtonContainer>
+      <Button
+        shape="circle"
+        icon="right"
+        type="primary"
+        size="small"
+        onClick={() => dispatch({ type: 'GO_FORWARD' })}
+      />
+    </RecapContainer>
   );
 }
 

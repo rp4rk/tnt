@@ -17,11 +17,11 @@ export const isSecureUrl = url =>
 export const isValidApiKey = key => key && String(key).length === 40;
 
 /**
- * Formats dates to redmine's strange preference (YYYY-MM-DD)
+ * Formats dates to redmine's strange preference (yyyy-MM-dd)
  * @param {String|Date} date An ISO string or date
  * @returns {String} A redmine formatted date
  */
-export const redmineDate = date => format(date, 'YYYY-MM-DD');
+export const redmineDate = date => format(date, 'yyyy-MM-dd');
 
 export const validRedmineDescription = val => {
   if (!val) return false;
