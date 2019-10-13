@@ -21,7 +21,8 @@ function UnconnectedAuthenticationForm({
   storedKey,
   storedAddress,
   updateRedmineAddress,
-  updateRedmineKey
+  updateRedmineKey,
+  history
 }) {
   const [
     redmineApiKey,
@@ -35,6 +36,7 @@ function UnconnectedAuthenticationForm({
     addressValid,
     addressPristine
   ] = useInputWithValidation(isSecureUrl, storedAddress);
+  const redirectToEntries = () => history.push('/entries');
 
   return (
     <Form
@@ -42,6 +44,7 @@ function UnconnectedAuthenticationForm({
         e.preventDefault();
         updateRedmineAddress(redmineAddress);
         updateRedmineKey(redmineApiKey);
+        redirectToEntries();
       }}
     >
       <Form.Item
@@ -89,6 +92,7 @@ function UnconnectedAuthenticationForm({
           onSubmit={() => {
             updateRedmineAddress(redmineAddress);
             updateRedmineKey(redmineApiKey);
+            redirectToEntries();
           }}
         >
           Save

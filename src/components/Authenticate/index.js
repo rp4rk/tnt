@@ -8,7 +8,7 @@ const { Title, Text } = Typography;
 export const Authenticate = props => (
   <>
     {props.location.isRedirected && alert('Please provide Redmine settings.')}
-    <AuthenticationTutorial />
+    <AuthenticationTutorial history={props.history} />
     <Title level={2}>
       <Icon type="setting" /> - Authenticate
     </Title>
@@ -20,6 +20,6 @@ export const Authenticate = props => (
       </strong>
     </Text>
     <Divider />
-    <AuthenticationForm />
+    <AuthenticationForm history={props.history} />
   </>
 );
