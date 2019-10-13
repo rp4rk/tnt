@@ -9,7 +9,7 @@ This client is a WIP to make entering data to redmine a much more accurate and e
 To run a local development instance, you will need docker and docker-compose installed.
 
 - Clone the project
-- Run npm install to install the projects dependancies
+- Run `npm install` to install the projects dependancies
 - Run `docker-compose up` to start the application along with a local redmine instance
 - Navigate to http://localhost:3002 to see the local redmine instance
 - Use `test-user` and `test-user` to log in to a user account
