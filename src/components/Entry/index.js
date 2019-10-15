@@ -24,7 +24,8 @@ const mapStateToProps = (state, { projectId, entryId }) => ({
   disableSubmit: entrySubmissionDisabled(state, projectId, entryId),
   complete: entryPostsComplete(state, projectId, entryId),
   loading: entryPostsLoading(state, projectId, entryId),
-  projectDefaultIssue: getProjectDefaultIssue(state, projectId)
+  projectDefaultIssue: getProjectDefaultIssue(state, projectId),
+  issueId: getEntryProperty(state, projectId, entryId, 'issueId')
 });
 
 const mapDispatchToProps = (dispatch, { projectId, entryId }) => ({
@@ -51,6 +52,7 @@ const Entry = ({
   comments,
   projectId,
   entryId,
+  issueId,
   disableSubmit,
   complete,
   loading
@@ -92,6 +94,7 @@ const Entry = ({
           projectId={projectId}
           onChange={setIssue}
           initialValue={projectDefaultIssue}
+          activeIssue={issueId}
         />
 
         <Text>Hours</Text>

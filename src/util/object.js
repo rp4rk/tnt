@@ -13,8 +13,10 @@ export const set = ([key, ...next], value, obj) => {
   return { ...obj, [key]: set(next, value, obj[key] || {}) };
 };
 
-export const get = (path = [], obj = {}) =>
-  path.reduce((val, key) => (val ? val[key] : undefined), obj);
+export const get = (path = [], obj = {}, defaultValue) =>
+  path.reduce((val, key) => {
+    return val && val[key] ? val[key] : defaultValue;
+  }, obj);
 
 /**
  * Builds a state object from localstorage items with the prefix provided

@@ -31,6 +31,12 @@ const Navigation = ({ location, redmineAddress, redmineKey }) => {
           <span>Time Entries</span>
         </Link>
       </Menu.Item>
+      <Menu.Item key="/table" disabled={!redmineAddress || !redmineKey}>
+        <Link to="table">
+          <Icon type="experiment" />
+          <span>Entry Table</span>
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 };
