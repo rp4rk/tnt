@@ -4,7 +4,8 @@ import {
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT,
-  SET_PROJECT_DEFAULT_ISSUE
+  SET_PROJECT_DEFAULT_ISSUE,
+  SET_ISSUES_FOR_PROJECT
 } from 'constants/actionTypes';
 import { buildStateFromLocalStorage } from 'util/object';
 
@@ -18,7 +19,8 @@ const initialState = {
   },
   projectDefaultIssues: {
     ...buildStateFromLocalStorage('PROJECT_DEFAULT_ISSUE')
-  }
+  },
+  issuesPerProject: {}
 };
 
 const REDUCERS = {
@@ -58,6 +60,13 @@ const REDUCERS = {
       ...state.projectDefaultIssues,
       [action.meta.id]: action.payload
     }
+  }),
+  [SET_ISSUES_FOR_PROJECT]: (state, action) => ({
+    ...state,
+    issuesPerProject: {
+      ...state.issuesPerProject,
+      [action.projectId]: action.issues
+    }
   })
 };
 
@@ -87,7 +96,7 @@ export const getProjectsLoading = state => state.loading;
  * @param {Number} id A project id
  * @returns {Object} A project
  */
-export const getProjectById = (state, id) => state.projects[id];
+export const getProjectById = (state, id) => state.projects[id] || {};
 
 /**
  * Get a project name by it's id
@@ -105,7 +114,7 @@ export const getProjectName = (state, id) =>
  * @returns {Object[]} A list of activities for this project
  */
 export const getProjectActivities = (state, id) =>
-  getProjectById(state, id).time_entry_activities;
+  getProjectById(state, id).time_entry_activities || [];
 
 /**
  * Get a project name by it's id

@@ -9,10 +9,11 @@ import {
 } from 'react-router-dom';
 
 import { AppView, ContentContainer, ContentView } from './styled';
-import { store } from 'store';
-import { Authenticate } from 'components/Authenticate';
-import Entries from 'components/Entries';
-import Navigation from 'components/Navigation';
+import { Authenticate } from './components/Authenticate';
+import { store } from './store';
+import Entries from './components/Entries';
+import Navigation from './components/Navigation';
+import EntryTable from './components/EntryTable';
 const { Sider } = Layout;
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
                 />
                 <Route exact path="/settings" component={Authenticate} />
                 <Route exact path="/entries" component={Entries} />
+                <Route exact path="/table" component={EntryTable} />
                 <Route component={() => <Redirect to="/settings" />} />
               </Switch>
             </ContentContainer>
