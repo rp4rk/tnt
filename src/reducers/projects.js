@@ -4,7 +4,8 @@ import {
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT,
-  SET_PROJECT_DEFAULT_ISSUE
+  SET_PROJECT_DEFAULT_ISSUE,
+  SET_ISSUES_FOR_PROJECT
 } from 'constants/actionTypes';
 import { buildStateFromLocalStorage } from 'util/object';
 
@@ -18,7 +19,8 @@ const initialState = {
   },
   projectDefaultIssues: {
     ...buildStateFromLocalStorage('PROJECT_DEFAULT_ISSUE')
-  }
+  },
+  issuesPerProject: {}
 };
 
 const REDUCERS = {
@@ -57,6 +59,13 @@ const REDUCERS = {
     projectDefaultIssues: {
       ...state.projectDefaultIssues,
       [action.meta.id]: action.payload
+    }
+  }),
+  [SET_ISSUES_FOR_PROJECT]: (state, action) => ({
+    ...state,
+    issuesPerProject: {
+      ...state.issuesPerProject,
+      [action.projectId]: action.issues
     }
   })
 };

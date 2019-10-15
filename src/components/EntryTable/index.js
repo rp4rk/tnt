@@ -33,56 +33,83 @@ const EntryTable = ({
   const [allActivities, setAllActivites] = useState({});
   const [selectedDate, setDate] = useState(new Date());
   const [showModal, setShowModal] = useState(false);
+  const [issue, setIssue] = useState();
 
   const weekNumber = getISOWeek(selectedDate);
+  const issueKey = issue || 'no-issue';
 
   const tableData = [];
-  get([activeProject, weekNumber], allComments, []).forEach((comment, i) => {
-    tableData[i] = tableData[i] ? { ...tableData[i], comment } : { comment };
-  });
-  get([activeProject, weekNumber], allActivities, []).forEach((activity, i) => {
-    tableData[i] = tableData[i] ? { ...tableData[i], activity } : { activity };
-  });
+  get([activeProject, issueKey, weekNumber], allComments, []).forEach(
+    (comment, i) => {
+      tableData[i] = tableData[i] ? { ...tableData[i], comment } : { comment };
+    }
+  );
+  get([activeProject, issueKey, weekNumber], allActivities, []).forEach(
+    (activity, i) => {
+      tableData[i] = tableData[i]
+        ? { ...tableData[i], activity }
+        : { activity };
+    }
+  );
   getDateRange(selectedDate).forEach(day => {
     const formattedDate = format(day, 'YYYY-MM-DD');
-    get([activeProject, formattedDate], allEntries, []).forEach((entry, i) => {
-      tableData[i] = tableData[i]
-        ? { ...tableData[i], [formattedDate]: entry }
-        : { [formattedDate]: entry };
-    });
+    get([activeProject, issueKey, formattedDate], allEntries, []).forEach(
+      (entry, i) => {
+        tableData[i] = tableData[i]
+          ? { ...tableData[i], [formattedDate]: entry }
+          : { [formattedDate]: entry };
+      }
+    );
   });
 
   const onChange = key => (value, record, index) => {
     if (key === 'activity') {
-      const toUpdate = get([activeProject, weekNumber], allActivities, []);
+      const toUpdate = get(
+        [activeProject, issueKey, weekNumber],
+        allActivities,
+        []
+      );
       toUpdate[index] = value;
       return setAllActivites({
         ...allActivities,
         [activeProject]: {
           ...allActivities[activeProject],
-          [weekNumber]: toUpdate
+          [issueKey]: {
+            ...get([activeProject, issueKey], allActivities, {}),
+            [weekNumber]: toUpdate
+          }
         }
       });
     }
     if (key === 'comment') {
-      const toUpdate = get([activeProject, weekNumber], allComments, []);
+      const toUpdate = get(
+        [activeProject, issueKey, weekNumber],
+        allComments,
+        []
+      );
       toUpdate[index] = value;
       return setAllComments({
         ...allComments,
         [activeProject]: {
           ...allComments[activeProject],
-          [weekNumber]: toUpdate
+          [issueKey]: {
+            ...get([activeProject, issueKey], allComments, {}),
+            [weekNumber]: toUpdate
+          }
         }
       });
     }
 
-    const toUpdate = get([activeProject, key], allEntries, []);
+    const toUpdate = get([activeProject, issueKey, key], allEntries, []);
     toUpdate[index] = value;
     return setAllEntries({
       ...allEntries,
       [activeProject]: {
         ...allEntries[activeProject],
-        [key]: toUpdate
+        [issueKey]: {
+          ...get([activeProject, issueKey], allEntries, {}),
+          [key]: toUpdate
+        }
       }
     });
   };
@@ -107,6 +134,8 @@ const EntryTable = ({
         selectedDate={selectedDate}
         onDateChange={setDate}
         activeProjects={activeProjects}
+        setIssue={setIssue}
+        activeIssue={issue}
       />
       <Table
         columns={getColumns(

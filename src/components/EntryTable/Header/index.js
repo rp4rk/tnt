@@ -6,6 +6,7 @@ import { DatePicker, Select } from 'antd';
 
 import { fetchProjects, setActiveProject } from 'actions/projects';
 import { getActiveProject } from 'selectors/projects';
+import IssuePrompt from 'components/IssuePrompt';
 
 const { Option } = Select;
 
@@ -24,11 +25,18 @@ const Header = ({
   getProjects,
   activeProjects,
   setActiveProject,
-  activeProject
+  setIssue,
+  activeProject,
+  activeIssue
 }) => {
   useEffect(() => {
     getProjects();
   }, [getProjects]);
+
+  const onChangeProject = id => {
+    setActiveProject(id);
+    setIssue();
+  };
 
   const startOf = format(startOfISOWeek(selectedDate), 'Do MMMM YYYY');
   const endOf = format(endOfISOWeek(selectedDate), 'Do MMMM YYYY');
@@ -46,7 +54,7 @@ const Header = ({
           placeholder="Project"
           style={{ width: 150, marginLeft: 15 }}
           value={activeProject}
-          onChange={setActiveProject}
+          onChange={onChangeProject}
         >
           {activeProjects.map(({ id, name }) => (
             <Option key={id} value={id}>
@@ -54,11 +62,14 @@ const Header = ({
             </Option>
           ))}
         </Select>
-        {/* <Select placeholder="Issue" style={{ width: 150, marginLeft: 15 }}>
-          <Option value="issue1">Issue 1</Option>
-          <Option value="issue2">Issue 2</Option>
-          <Option value="issue3">Issue 3</Option>
-        </Select> */}
+        <IssuePrompt
+          style={{ width: 250, marginLeft: 15 }}
+          projectId={activeProject}
+          onChange={setIssue}
+          activeIssue={activeIssue}
+          allowClear
+          initialValue={activeProject}
+        />
       </div>
       <h3>{`${startOf} - ${endOf}`}</h3>
     </>

@@ -85,51 +85,66 @@ export const getSummary = (
   comments,
   activities,
   projectActivities,
-  activeProjects
+  activeProjects,
+  allIssues
 ) => {
   let summary = [];
   let components = [];
-  Object.entries(entries).forEach(([project, entry]) => {
+  Object.entries(entries).forEach(([project, issue]) => {
     components.push(
       <h3 style={{ marginTop: 20 }}>
         {activeProjects.find(p => p.id === +project).name}
       </h3>
     );
-    summary = [
-      ...summary,
-      ...Object.entries(entry).reduce((acc, [date, hours]) => {
-        const entries = [];
-        const week = getISOWeek(parse(date));
-        const weekComments = get([project, week], comments, []);
-        const weekActivities = get([project, week], activities, []);
+    Object.entries(issue).forEach(([issueId, entry]) => {
+      components.push(<h3 style={{ marginTop: 20 }}>Issue ID {issueId}</h3>);
+      summary = [
+        ...summary,
+        ...Object.entries(entry).reduce((acc, [date, hours]) => {
+          const entries = [];
+          const week = getISOWeek(parse(date));
+          const weekComments = get([project, issueId, week], comments, []);
+          const weekActivities = get([project, issueId, week], activities, []);
 
-        components.push(
-          <div style={{ fontWeight: 'bold', marginTop: 10 }}>
-            {format(date, 'Do MMMM')}
-          </div>
-        );
-
-        hours.forEach((hour, i) => {
-          const activity = projectActivities.find(
-            pa => pa.id === weekActivities[i]
-          );
-          const activityName = activity ? activity.name : '';
           components.push(
-            <div>{`${activityName} - ${hour} hours - ${weekComments[i]}`}</div>
+            <div style={{ fontWeight: 'bold', marginTop: 10 }}>
+              {format(date, 'Do MMMM')}
+            </div>
           );
 
-          entries.push({
-            spent_on: date,
-            hours: hour,
-            comments: weekComments[i],
-            activity_id: weekActivities[i],
-            project_id: project
-          });
-        });
+          hours.forEach((hour, i) => {
+            const activity = projectActivities.find(
+              pa => pa.id === weekActivities[i]
+            );
+            const activityName = activity ? activity.name : '';
+            components.push(
+              <div>{`${activityName} - ${hour} hours - ${
+                weekComments[i]
+              }`}</div>
+            );
 
-        return [...acc, ...entries];
-      }, [])
-    ];
+            let entryToSubmit = {
+              spent_on: date,
+              hours: hour,
+              comments: weekComments[i],
+              activity_id: weekActivities[i],
+              project_id: project
+            };
+
+            if (issueId !== 'no-issue') {
+              entryToSubmit = {
+                ...entryToSubmit,
+                issue_id: issueId
+              };
+            }
+
+            entries.push(entryToSubmit);
+          });
+
+          return [...acc, ...entries];
+        }, [])
+      ];
+    });
   });
 
   return [summary, components];

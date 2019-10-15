@@ -4,7 +4,8 @@ import {
   GET_PROJECTS_FAILURE,
   SET_PROJECT_ALIAS,
   SET_ACTIVE_PROJECT,
-  SET_PROJECT_DEFAULT_ISSUE
+  SET_PROJECT_DEFAULT_ISSUE,
+  SET_ISSUES_FOR_PROJECT
 } from 'constants/actionTypes';
 import { getProjectEndpoint } from 'constants/endpoints';
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
@@ -96,5 +97,13 @@ export const setProjectDefaultIssue = (id, issueId) => ({
     store: {
       key: `PROJECT_DEFAULT_ISSUE_${id}`
     }
+  }
+});
+
+export const setIssuesForProject = (projectId, issues) => ({
+  type: SET_ISSUES_FOR_PROJECT,
+  payload: {
+    projectId,
+    issues
   }
 });
