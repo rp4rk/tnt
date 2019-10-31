@@ -1,0 +1,36 @@
+type Project {
+  id: Int!
+  name: String!
+  description: String
+  entries: [TimeEntry]
+}
+
+type TimeEntryProject {
+  id: Int
+  name: String
+}
+type TimeEntryUser {
+  id: Int
+  name: String
+}
+type TimeEntryActivity {
+  id: Int
+  name: String
+}
+
+type TimeEntry {
+  id: Int
+  hours: Float
+  comments: String
+  spent_on: String
+  creation_on: String
+  updated_on: String
+  project: TimeEntryProject
+  user: TimeEntryUser
+  activity: TimeEntryActivity
+}
+
+type Query {
+  project(id: Int!): Project
+  timeEntries(projectId: Int!): [TimeEntry]
+}

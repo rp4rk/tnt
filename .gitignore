@@ -25,3 +25,7 @@ yarn-error.log*
 # Redmine Local DB
 # This prevents changes to the test seed
 /redmine/redmine.db
+node_modules
+.cache
+.vscode
+build
