@@ -37,8 +37,10 @@ export const getTimeEntryEndpointWithParams = (host, params) => {
   return url;
 };
 
-export const getIssuesEndpoint = (host, params = {}) => {
-  const url = new URL(`${corsProxy}${devHost || host}/issues.json`);
+export const getIssuesEndpoint = (host, params) => {
+  const url = new URL(
+    `${corsProxy}${devHost || host}/issues.json?project_id=${params.project_id}`
+  );
 
   Object.entries(params).forEach(([key, value]) =>
     url.searchParams.append(key, value)
