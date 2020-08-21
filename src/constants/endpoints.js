@@ -19,6 +19,7 @@ export const getProjectEndpoint = host =>
 export const getTimeEntryEndpoint = host =>
   `${corsProxy}${devHost || host}/time_entries.json`;
 
+
 export const getTimeEntryEndpointWithParams = (host, params) => {
   //add url params to both url before finalising full url
   var redmineURL = new URL(`${host}/time_entries.json`);
@@ -36,6 +37,7 @@ export const getTimeEntryEndpointWithParams = (host, params) => {
 
   return url;
 };
+
 
 export const getIssuesEndpoint = (host, params) => {
   const url = new URL(
