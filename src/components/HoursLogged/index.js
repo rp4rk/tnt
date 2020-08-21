@@ -69,7 +69,7 @@ const columns = [
     width: 100
   },
   {
-    title: 'Hours Logged',
+    title: 'Hours',
     dataIndex: 'hours',
     key: 'hours',
     width: 100

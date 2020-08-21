@@ -5,7 +5,9 @@ const corsProxy =
     : 'https://us-central1-tnt-app-237920.cloudfunctions.net/corsProxy?url=';
 
 const corsProxyWithoutParam =
-  'https://us-central1-tnt-app-237920.cloudfunctions.net/corsProxy';
+  process.env.NODE_ENV === 'development'
+    ? ''
+    : 'https://us-central1-tnt-app-237920.cloudfunctions.net/corsProxy';
 
 // Set to the development host if not in production
 const devHost =
@@ -19,7 +21,7 @@ export const getTimeEntryEndpoint = host =>
 
 export const getTimeEntryEndpointWithParams = (host, params) => {
   //add url params to both url before finalising full url
-  var redmineURL = new URL(host + '/time_entries.json');
+  var redmineURL = new URL(`${host}/time_entries.json`);
   redmineURL.search = new URLSearchParams({
     from: params.from,
     to: params.to,

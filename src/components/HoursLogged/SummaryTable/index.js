@@ -20,7 +20,7 @@ const groupByDate = allEntries => {
     summary.push({
       key: date[0],
       spent_on: format(date[0], 'dddd YYYY-MM-DD'),
-      hours: totalHours + isHoliday
+      hours: `${totalHours}${isHoliday}`
     });
   });
   return summary;
@@ -34,7 +34,7 @@ const columns = [
     width: 100
   },
   {
-    title: 'Hours Logged',
+    title: 'Total Hours',
     dataIndex: 'hours',
     key: 'hours',
     width: 100
