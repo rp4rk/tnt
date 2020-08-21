@@ -37,6 +37,12 @@ const Navigation = ({ location, redmineAddress, redmineKey }) => {
           <span>Entry Table</span>
         </Link>
       </Menu.Item>
+      <Menu.Item key="/hours" disabled={!redmineAddress || !redmineKey}>
+        <Link to="hours">
+          <Icon type="file-done" />
+          <span>Hours Logged</span>
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 };

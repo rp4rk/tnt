@@ -14,6 +14,7 @@ import { store } from './store';
 import Entries from './components/Entries';
 import Navigation from './components/Navigation';
 import EntryTable from './components/EntryTable';
+import HoursLogged from './components/HoursLogged/index';
 const { Sider } = Layout;
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
                 <Route exact path="/settings" component={Authenticate} />
                 <Route exact path="/entries" component={Entries} />
                 <Route exact path="/table" component={EntryTable} />
+                <Route exact path="/hours" component={HoursLogged} />
                 <Route component={() => <Redirect to="/settings" />} />
               </Switch>
             </ContentContainer>
