@@ -17,6 +17,7 @@ import { getActiveProject, getActiveProjects } from 'selectors/projects';
 import { getRedmineAddress, getRedmineKey } from 'selectors/redmine';
 import { store } from '../../store';
 import { redmineDate } from 'util/redmine';
+import _ from 'lodash';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -91,6 +92,8 @@ const HoursLogged = ({
   const [dateFrom, setFromDate] = useState();
   const [dateTo, setToDate] = useState();
   const [timeEntries, setTimeEntries] = useState([]);
+  const [uniqueUsers, setUniqueUsers] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
   const [showHourSummary, setHourSummary] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -107,6 +110,7 @@ const HoursLogged = ({
         setTimeEntries
       );
       setTimeEntries(entries);
+      setUniqueUserList(entries)
       setLoading(false);
     }
 
@@ -121,12 +125,25 @@ const HoursLogged = ({
     if (dateFrom && dateTo) {
       setLoading(true);
       getTimeEntries(id, dateFrom, dateTo);
+      setCurrentUser(null);
     }
   };
 
   const splitRangeSet = dates => {
     setFromDate(redmineDate(dates[0]));
     setToDate(redmineDate(dates[1]));
+  };
+
+  const filterEntriesByName = selectedUser => {
+    setCurrentUser(selectedUser);
+  };
+
+  const setUniqueUserList = (entries) => {
+    let uniqueUsers = [...new Set(entries.map(item => item.user.name))];
+    if(uniqueUsers.length === 1) {
+      setCurrentUser(uniqueUsers[0]);
+    }
+    setUniqueUsers(uniqueUsers);
   };
 
   return (
@@ -159,18 +176,33 @@ const HoursLogged = ({
             onChange={splitRangeSet}
             size="small"
           />
-          <Checkbox
-            checked={showHourSummary}
-            onChange={e => setHourSummary(e.target.checked)}
-          >
-            View Total Hours per day?
-          </Checkbox>
+          {timeEntries.length > 0 && uniqueUsers.length > 1 && !loading && (
+            <>
+            <Text>Filter by User</Text>
+            <Select
+              placeholder="User"
+              style={{ width: '50%', marginLeft: 15 }}
+              onChange={filterEntriesByName}
+            >
+              {uniqueUsers.map((name) => (
+                <Option key={name} value={name}>
+                  {name}
+                </Option>
+              ))}
+            </Select></>)}
           {loading && <Icon style={{ color: 'black' }} type="loading" />}
-
-          {timeEntries.length > 0 && !loading && !showHourSummary && (
+          {timeEntries.length > 0 && currentUser && (
+            <Checkbox
+              checked={showHourSummary}
+              onChange={e => setHourSummary(e.target.checked)}
+            >
+              View Total Hours per day?
+            </Checkbox>
+          )}
+          {timeEntries.length > 0 && !loading && !showHourSummary && currentUser && (
             <Table
               rowKey={r => r.id}
-              dataSource={timeEntries}
+              dataSource={_.filter(timeEntries, { user: { name: currentUser} })}
               columns={columns}
               pagination={{ pageSize: 5 }}
               style={{ width: '80%', marginBottom: 15 }}
