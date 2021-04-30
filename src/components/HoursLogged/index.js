@@ -110,7 +110,7 @@ const HoursLogged = ({
         setTimeEntries
       );
       setTimeEntries(entries);
-      setUniqueUserList(entries)
+      setUniqueUserList(entries);
       setLoading(false);
     }
 
@@ -138,9 +138,9 @@ const HoursLogged = ({
     setCurrentUser(selectedUser);
   };
 
-  const setUniqueUserList = (entries) => {
+  const setUniqueUserList = entries => {
     let uniqueUsers = [...new Set(entries.map(item => item.user.name))];
-    if(uniqueUsers.length === 1) {
+    if (uniqueUsers.length === 1) {
       setCurrentUser(uniqueUsers[0]);
     }
     setUniqueUsers(uniqueUsers);
@@ -178,18 +178,20 @@ const HoursLogged = ({
           />
           {timeEntries.length > 0 && uniqueUsers.length > 1 && !loading && (
             <>
-            <Text>Filter by User</Text>
-            <Select
-              placeholder="User"
-              style={{ width: '50%', marginLeft: 15 }}
-              onChange={filterEntriesByName}
-            >
-              {uniqueUsers.map((name) => (
-                <Option key={name} value={name}>
-                  {name}
-                </Option>
-              ))}
-            </Select></>)}
+              <Text>Filter by User</Text>
+              <Select
+                placeholder="User"
+                style={{ width: '50%', marginLeft: 15 }}
+                onChange={filterEntriesByName}
+              >
+                {uniqueUsers.map(name => (
+                  <Option key={name} value={name}>
+                    {name}
+                  </Option>
+                ))}
+              </Select>
+            </>
+          )}
           {loading && <Icon style={{ color: 'black' }} type="loading" />}
           {timeEntries.length > 0 && currentUser && (
             <Checkbox
@@ -199,18 +201,27 @@ const HoursLogged = ({
               View Total Hours per day?
             </Checkbox>
           )}
-          {timeEntries.length > 0 && !loading && !showHourSummary && currentUser && (
-            <Table
-              rowKey={r => r.id}
-              dataSource={_.filter(timeEntries, { user: { name: currentUser} })}
-              columns={columns}
-              pagination={{ pageSize: 5 }}
-              style={{ width: '80%', marginBottom: 15 }}
-            />
-          )}
+          {timeEntries.length > 0 &&
+            !loading &&
+            !showHourSummary &&
+            currentUser && (
+              <Table
+                rowKey={r => r.id}
+                dataSource={_.filter(timeEntries, {
+                  user: { name: currentUser }
+                })}
+                columns={columns}
+                pagination={{ pageSize: 5 }}
+                style={{ width: '80%', marginBottom: 15 }}
+              />
+            )}
 
           {timeEntries.length > 0 && !loading && showHourSummary && (
-            <SummaryTable groupedEntries={timeEntries} />
+            <SummaryTable
+              groupedEntries={_.filter(timeEntries, {
+                user: { name: currentUser }
+              })}
+            />
           )}
         </GridContainer>
       </StyledCard>
@@ -218,7 +229,4 @@ const HoursLogged = ({
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HoursLogged);
+export default connect(mapStateToProps, mapDispatchToProps)(HoursLogged);
