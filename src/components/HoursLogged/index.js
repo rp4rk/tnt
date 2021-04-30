@@ -216,13 +216,16 @@ const HoursLogged = ({
               />
             )}
 
-          {timeEntries.length > 0 && !loading && showHourSummary && (
-            <SummaryTable
-              groupedEntries={_.filter(timeEntries, {
-                user: { name: currentUser }
-              })}
-            />
-          )}
+          {timeEntries.length > 0 &&
+            !loading &&
+            showHourSummary &&
+            currentUser && (
+              <SummaryTable
+                groupedEntries={_.filter(timeEntries, {
+                  user: { name: currentUser }
+                })}
+              />
+            )}
         </GridContainer>
       </StyledCard>
     </>
